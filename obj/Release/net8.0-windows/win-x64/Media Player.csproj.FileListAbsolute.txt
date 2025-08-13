@@ -1,0 +1,42 @@
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\app_config.json
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\media.db
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.exe
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.dll.config
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.deps.json
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.runtimeconfig.json
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Media Player.pdb
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Dapper.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Microsoft.Win32.SystemEvents.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\System.Data.SQLite.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\System.Drawing.Common.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\System.Private.Windows.Core.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\SQLite.Interop.dll
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.csproj.AssemblyReference.cache
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\CompactWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\MainWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\OptionsWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Pages\PlaylistPage.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\PlaylistEditPage.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\SelectPlaylistWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\App.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_Content.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_MarkupCompile.cache
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_MarkupCompile.lref
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\CompactWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\MainWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\OptionsWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Pages\PlaylistPage.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\PlaylistEditPage.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\SelectPlaylistWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.g.resources
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.AssemblyInfoInputs.cache
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.AssemblyInfo.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.csproj.CoreCompileInputs.cache
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Pl.6759EB6C.Up2Date
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.dll
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\refint\Media Player.dll
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.pdb
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.genruntimeconfig.cache
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\ref\Media Player.dll

@@ -1,0 +1,20 @@
+﻿Media Player
+
+
+winexe
+C#
+.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\
+Media_Player
+none
+false
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+D:\Repos\Media Player\App.xaml
+6754862372
+3426833700
+151951271496
+2021957770586
+CompactWindow.xaml;MainWindow.xaml;OptionsWindow.xaml;Pages\PlaylistPage.xaml;PlaylistEditPage.xaml;SelectPlaylistWindow.xaml;
+
+False
+

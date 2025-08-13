@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Media_Player</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>media_player.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="app_config.json" />
+    <None Remove="media.db" />
+    <None Remove="Sprites\1x1_invis_icon.ico" />
+    <None Remove="Sprites\audio_file_image.png" />
+    <None Remove="Sprites\bin_brush.png" />
+    <None Remove="Sprites\bin_clear.png" />
+    <None Remove="Sprites\cross.png" />
+    <None Remove="Sprites\file_go.png" />
+    <None Remove="Sprites\folder_go.png" />
+    <None Remove="Sprites\media_player.ico" />
+    <None Remove="Sprites\menu_play.png" />
+    <None Remove="Sprites\mute.png" />
+    <None Remove="Sprites\pause.png" />
+    <None Remove="Sprites\pencil.png" />
+    <None Remove="Sprites\play.png" />
+    <None Remove="Sprites\playlist_go.png" />
+    <None Remove="Sprites\previous.png" />
+    <None Remove="Sprites\repeat_triggered.png" />
+    <None Remove="Sprites\repeat_untriggered.png" />
+    <None Remove="Sprites\rewind.png" />
+    <None Remove="Sprites\shuffle_triggered.png" />
+    <None Remove="Sprites\shuffle_untriggered.png" />
+    <None Remove="Sprites\skip.png" />
+    <None Remove="Sprites\unmute.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="app_config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media_player.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Sprites\1x1_invis_icon.ico" />
+    <Resource Include="Sprites\audio_file_image.png" />
+    <Resource Include="Sprites\bin_brush.png" />
+    <Resource Include="Sprites\bin_clear.png" />
+    <Resource Include="Sprites\cross.png" />
+    <Resource Include="Sprites\file_go.png" />
+    <Resource Include="Sprites\folder_go.png" />
+    <Resource Include="Sprites\media_player.ico" />
+    <Resource Include="Sprites\menu_play.png" />
+    <Resource Include="Sprites\mute.png" />
+    <Resource Include="Sprites\pause.png" />
+    <Resource Include="Sprites\pencil.png" />
+    <Resource Include="Sprites\play.png" />
+    <Resource Include="Sprites\playlist_go.png" />
+    <Resource Include="Sprites\previous.png" />
+    <Resource Include="Sprites\repeat_triggered.png" />
+    <Resource Include="Sprites\repeat_untriggered.png" />
+    <Resource Include="Sprites\rewind.png" />
+    <Resource Include="Sprites\shuffle_triggered.png" />
+    <Resource Include="Sprites\shuffle_untriggered.png" />
+    <Resource Include="Sprites\skip.png" />
+    <Resource Include="Sprites\unmute.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

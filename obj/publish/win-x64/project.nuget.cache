@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "71wKNDmxf1s=",
+  "success": true,
+  "projectFilePath": "D:\\Repos\\Media Player\\Media Player.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alexandru\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
+    "C:\\Users\\Alexandru\\.nuget\\packages\\microsoft.win32.systemevents\\9.0.8\\microsoft.win32.systemevents.9.0.8.nupkg.sha512",
+    "C:\\Users\\Alexandru\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.119\\stub.system.data.sqlite.core.netstandard.1.0.119.nupkg.sha512",
+    "C:\\Users\\Alexandru\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512",
+    "C:\\Users\\Alexandru\\.nuget\\packages\\system.drawing.common\\9.0.8\\system.drawing.common.9.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

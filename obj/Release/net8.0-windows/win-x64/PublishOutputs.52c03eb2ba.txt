@@ -1,0 +1,14 @@
+D:\C# Projects\MP\Media Player.exe
+D:\C# Projects\MP\app_config.json
+D:\C# Projects\MP\media.db
+D:\C# Projects\MP\Media Player.dll
+D:\C# Projects\MP\Media Player.deps.json
+D:\C# Projects\MP\Media Player.runtimeconfig.json
+D:\C# Projects\MP\Media Player.dll.config
+D:\C# Projects\MP\Media Player.pdb
+D:\C# Projects\MP\Dapper.dll
+D:\C# Projects\MP\Microsoft.Win32.SystemEvents.dll
+D:\C# Projects\MP\System.Data.SQLite.dll
+D:\C# Projects\MP\System.Drawing.Common.dll
+D:\C# Projects\MP\System.Private.Windows.Core.dll
+D:\C# Projects\MP\SQLite.Interop.dll
