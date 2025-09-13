@@ -51,7 +51,7 @@ namespace Media_Player.Scripts
         {
             foreach (string key in playlist.item_playcount.Keys)
             {
-                if (key.ToLower().Contains(song_name) || key == song_name)
+                if (key.ToLower().Contains(song_name.ToLower()) || key == song_name)
                 {
                     return playlist.item_playcount[key];
                 }

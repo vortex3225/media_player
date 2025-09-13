@@ -24,6 +24,10 @@
                     <TextBlock Text="Compact mode" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 152.8, 0"/>
                     <CheckBox x:Name="compact_mode_checkbox" IsChecked="False" Click="compact_mode_checkbox_Click"/>
                 </StackPanel>
+                <StackPanel Margin="0, 5, 0, 0" Height="15" Orientation="Horizontal">
+                    <TextBlock Text="Discord Rich Presence" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 115.5, 0"/>
+                    <CheckBox x:Name="drp_checkbox" IsChecked="True" Click="drp_checkbox_Click"/>
+                </StackPanel>
                 <StackPanel x:Name="compact_aot_panel" Margin="0, 5, 0, 0" Height="15" Visibility="Hidden" Orientation="Horizontal">
                     <TextBlock Text="Make compact panel always on top" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 55.5, 0"/>
                     <CheckBox x:Name="compact_always_on_top_check" IsChecked="False" Click="compact_always_on_top_check_Click"/>

@@ -44,6 +44,7 @@ namespace Media_Player
         public static bool handling_media = false;
         public static double current_media_seconds = 1;
         public static bool compact_mode_enabled = false;
+        public static bool has_items = false;
 
         public static CompactWindow ?compact_window = null;
 
@@ -55,7 +56,7 @@ namespace Media_Player
         public static string format = @"mm\:ss";
 
 
-        public static ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
+        public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
 
         private void InitialiseMenuItemIcons()
@@ -238,6 +239,22 @@ namespace Media_Player
                     {outP}
                     """, $"{invalid_paths.Count} invalid paths found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            if (playlist_contents.Items.Count > 0) has_items = true;
+        }
+
+        private int previously_bold_index = 0;
+        private void BoldenCurrentlyPlaying()
+        {
+            ListViewItem? current = playlist_contents.Items[current_file_index] as ListViewItem;
+
+            if (previously_bold_index != current_file_index)
+            {
+                ListViewItem? previous = playlist_contents.Items[previously_bold_index] as ListViewItem;
+                if (previous != null) previous.FontWeight = FontWeights.Normal;
+            }
+            if (current != null) current.FontWeight = FontWeights.Bold;
+            previously_bold_index = current_file_index;
         }
 
         public async Task PlayMedia(string media_file_name, bool overwrite = false, bool increment = true, bool auto_play = true)
@@ -275,9 +292,9 @@ namespace Media_Player
                 await Task.Delay(150);
                 video_out_display.Source = new Uri(media_file_name);
                 media_title_display.Text = name;
-            } 
+            }
             video_out_display.Volume = volume_slider.Value / 100;
-            
+
             if (auto_play)
             {
                 video_out_display.Play();
@@ -294,6 +311,7 @@ namespace Media_Player
             if (increment && opened_playlist != null && auto_play)
             {
                 UtilityHandler.IncrementSong(media_file_name, opened_playlist);
+                song_plays_display.Text = $"Media plays: {UtilityHandler.GetSongPlays(media_file_name, opened_playlist)}";
             }
             else if (opened_playlist == null)
             {
@@ -311,7 +329,16 @@ namespace Media_Player
             {
                 update_seek_bar_thread.Start();
             }
+
+            pause_btn.Dispatcher.Invoke(new Action(() =>
+            {
+                pause_btn.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                };
+            }));
             handling_media = false;
+            BoldenCurrentlyPlaying();
         }
         public TimeSpan CalculateNewTimespan()
         {
@@ -392,6 +419,7 @@ namespace Media_Player
                 current_pos_display.Text = string.Format(format, 0);
                 current_media_seconds = video_out_display.NaturalDuration.TimeSpan.TotalSeconds;
             }
+            if (fetched_settings.drp == true) DiscordRichPresenceHandler.UpdatePresence(song_plays_display.Text, media_title_display.Text, video_out_display.NaturalDuration.TimeSpan, (video_out_display.Source.LocalPath.Contains("mp4") ? DiscordRPC.ActivityType.Watching : DiscordRPC.ActivityType.Listening), new DiscordRPC.Assets { LargeImageKey = "idle_img", LargeImageText = media_title_display.Text });
         }
 
         private async void ActionMedia(bool increment = true)
@@ -446,10 +474,10 @@ namespace Media_Player
         public MainWindow()
         {
             InitializeComponent();
-            InitialiseMenuItemIcons();
+            InitialiseMenuItemIcons();            
             video_out_display.LoadedBehavior = MediaState.Manual;
-
             fetched_settings = AppHandler.InitSettings();
+            if (fetched_settings.drp == true) DiscordRichPresenceHandler.InitialiseClient(); else DiscordRichPresenceHandler.Dispose();
 
             if (fetched_settings.save_files)
             {
@@ -485,6 +513,11 @@ namespace Media_Player
             page_display_frame.Visibility = Visibility.Hidden;
             video_out_display.MediaEnded += Video_out_display_MediaEnded;
             this.Closed += MainWindow_Closed;
+
+            if (playlist_contents.Items.Count > 0)
+            {
+                has_items = true;
+            }
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
@@ -516,6 +549,8 @@ namespace Media_Player
             {
                 compact_window.Close();
             }
+
+            DiscordRichPresenceHandler.Dispose();
         }
 
         public void Rewind()
@@ -684,6 +719,7 @@ namespace Media_Player
         private void clear_menu_btn_Click(object sender, RoutedEventArgs e)
         {
             playlist_contents.Items.Clear();
+            has_items = false;
             playlist_items_display.Text = "Items: 0";
         }
 
@@ -727,7 +763,22 @@ namespace Media_Player
                 if (!is_shuffled)
                 {
                     is_shuffled = true;
+                    string p = video_out_display.Source.LocalPath;
                     Shuffle();
+                    if (is_looping)
+                    {
+                        int x = 0;
+                        foreach (ListViewItem item in playlist_contents.Items)
+                        {
+                            if (p.Contains(item.Content.ToString()))
+                            {
+                                current_file_index = x;
+                                break;
+                            }
+                            x++;
+                        }
+                    }
+
                     shuffle_btn.Content = new Image
                     {
                         Source = new BitmapImage(new Uri("/Sprites/shuffle_triggered.png", UriKind.RelativeOrAbsolute))

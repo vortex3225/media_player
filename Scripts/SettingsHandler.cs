@@ -127,6 +127,7 @@ namespace Media_Player.Scripts
                 {
                     cnn.Execute("UPDATE Settings SET saved_files=@N, current_media_source=@P, current_media_position=@C", new { N = string.Empty, P = string.Empty, C = 0 });
                 }
+                AppHandler.SaveFile(new AppSettings());
                 MessageBox.Show("Cleared saved options.", "Successfully cleared saved options", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

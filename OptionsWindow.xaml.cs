@@ -29,6 +29,8 @@ namespace Media_Player
         {
             InitializeComponent();
 
+            compact_mode_checkbox.IsEnabled = MainWindow.has_items;
+
             if (MainWindow.compact_mode_enabled)
             {
                 compact_mode_checkbox.IsChecked = true;
@@ -41,6 +43,7 @@ namespace Media_Player
 
             resume_checkbox.IsChecked = settings.resume_on_enter;
             save_opened_files_checkbox.IsChecked = settings.save_files;
+            drp_checkbox.IsChecked = settings.drp;
 
             this.Closing += OptionsWindow_Closing;
             actual = window;
@@ -54,7 +57,7 @@ namespace Media_Player
 
         private void compact_mode_checkbox_Click(object sender, RoutedEventArgs e)
         {
-            if (compact_mode_checkbox.IsChecked == true)
+            if (compact_mode_checkbox.IsChecked == true && MainWindow.has_items)
             {
                 MainWindow.compact_window = new CompactWindow(actual);
                 MainWindow.compact_window.Show();
@@ -118,6 +121,13 @@ namespace Media_Player
             {
                 MainWindow.compact_window.Topmost = (bool)compact_always_on_top_check.IsChecked;
             }
+        }
+
+        private void drp_checkbox_Click(object sender, RoutedEventArgs e)
+        {
+            settings.drp = (bool)drp_checkbox.IsChecked;
+            if (settings.drp == true) DiscordRichPresenceHandler.InitialiseClient();
+            else DiscordRichPresenceHandler.Dispose();
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Media_Player.Objects;
 using Media_Player.Scripts;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace Media_Player
 {
@@ -212,6 +216,51 @@ namespace Media_Player
                     }
                 }
             }
+        }
+
+        private void change_paths_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (playlist_contents.SelectedItems.Count <= 0) MessageBox.Show("Please select atleast 1 media element!");
+            if (fetched_playlist == null) return;
+
+            string confirmation_str = "Are you sure you wish to change the paths of the following files:\n";
+            foreach (CheckBox item in playlist_contents.SelectedItems)
+            {
+                confirmation_str += (item.Content + "\n");
+            }
+            if (MessageBox.Show(confirmation_str, "Replacing paths", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+
+            OpenFolderDialog ofd = new OpenFolderDialog();
+            ofd.Title = "Select a new folder";
+
+            string ?folder_name = (ofd.ShowDialog() == true) ? ofd.FolderName : null;
+            if (folder_name == null) return;
+
+            foreach (CheckBox c_item in playlist_contents.SelectedItems)
+            {
+                string item = c_item.Content.ToString();
+
+                for (int i = fetched_playlist.playlist_items.Count - 1; i >= 0; i--)
+                {
+                    string fetched = fetched_playlist.playlist_items[i];
+                    if (fetched.Contains(item))
+                    {
+                        string replaced = System.IO.Path.Combine(folder_name, System.IO.Path.GetFileName(item));
+                        fetched_playlist.playlist_items[i] = replaced;
+
+                        string as_string = UtilityHandler.GeneratePlaylistItemCount(fetched_playlist.item_playcount);
+                        as_string = as_string.Replace(fetched, replaced);
+                        fetched_playlist.item_playcount = UtilityHandler.GeneratePlaylistItemCount(as_string);
+                    }
+                }
+            }
+            PlaylistObject edited_playlist = new PlaylistObject(fetched_playlist.name, fetched_playlist.playlist_items, fetched_playlist.item_playcount);
+
+            PlaylistHandler.DeletePlaylist(fetched_playlist.name);
+            PlaylistHandler.SavePlaylist(edited_playlist);
+            main_page.GeneratePlaylist(edited_playlist);
+            MessageBox.Show($"Completed edit of {fetched_playlist.name}!", "Completed playlist editing", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
     }
 }

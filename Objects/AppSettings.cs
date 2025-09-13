@@ -10,5 +10,6 @@ namespace Media_Player.Objects
     {
         public bool resume_on_enter { get; set; } = false;
         public bool save_files { get; set; } = false;
+        public bool drp { get; set; } = true;
     }
 }
