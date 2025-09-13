@@ -248,13 +248,19 @@ namespace Media_Player
         {
             ListViewItem? current = playlist_contents.Items[current_file_index] as ListViewItem;
 
-            if (previously_bold_index != current_file_index)
+            if (previously_bold_index != current_file_index && previously_bold_index < playlist_contents.Items.Count)
             {
                 ListViewItem? previous = playlist_contents.Items[previously_bold_index] as ListViewItem;
                 if (previous != null) previous.FontWeight = FontWeights.Normal;
             }
             if (current != null) current.FontWeight = FontWeights.Bold;
             previously_bold_index = current_file_index;
+        }
+
+        private void Unbolden()
+        {
+            ListViewItem? previous = playlist_contents.Items[previously_bold_index] as ListViewItem;
+            if (previous != null) previous.FontWeight = FontWeights.Normal;
         }
 
         public async Task PlayMedia(string media_file_name, bool overwrite = false, bool increment = true, bool auto_play = true)
@@ -841,9 +847,19 @@ namespace Media_Player
             if (before_search_list != null)
             {
                 playlist_contents.Items.Clear();
+                int x = 0;
                 foreach (ListViewItem item in before_search_list)
                 {
                     playlist_contents.Items.Add(item);
+                    ListViewItem n = playlist_contents.Items[x] as ListViewItem;
+                    n.FontWeight = FontWeights.Normal;
+
+                    if (video_out_display.Source.LocalPath.Contains(item.Content.ToString()))
+                    {
+                        current_file_index = x;
+                        BoldenCurrentlyPlaying();
+                    }
+                    x++;
                 }
             }
         }
@@ -852,6 +868,8 @@ namespace Media_Player
 
             if (string.IsNullOrEmpty(opened_searchbox.Text))
             {
+                Unbolden();
+                previously_bold_index = 0;
                 RestoreItemsBeforeSearch();
                 return;
             }

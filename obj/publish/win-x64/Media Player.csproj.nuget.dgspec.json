@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[2.1.66, )"
             },
+            "DiscordRichPresence": {
+              "target": "Package",
+              "version": "[1.6.1.70, )"
+            },
             "System.Data.SQLite.Core": {
               "target": "Package",
               "version": "[1.0.119, )"
@@ -82,7 +86,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

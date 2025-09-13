@@ -40,3 +40,6 @@ D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\refint\Media Player.dll
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.pdb
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.genruntimeconfig.cache
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\ref\Media Player.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\DiscordRPC.dll
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Newtonsoft.Json.dll
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.sourcelink.json

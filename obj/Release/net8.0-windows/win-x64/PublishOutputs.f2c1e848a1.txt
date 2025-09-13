@@ -7,7 +7,9 @@ D:\C# Projects\Media Player\Media Player.runtimeconfig.json
 D:\C# Projects\Media Player\Media Player.dll.config
 D:\C# Projects\Media Player\Media Player.pdb
 D:\C# Projects\Media Player\Dapper.dll
+D:\C# Projects\Media Player\DiscordRPC.dll
 D:\C# Projects\Media Player\Microsoft.Win32.SystemEvents.dll
+D:\C# Projects\Media Player\Newtonsoft.Json.dll
 D:\C# Projects\Media Player\System.Data.SQLite.dll
 D:\C# Projects\Media Player\System.Drawing.Common.dll
 D:\C# Projects\Media Player\System.Private.Windows.Core.dll

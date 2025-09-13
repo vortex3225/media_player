@@ -46,3 +46,4 @@ D:\Repos\Media Player\obj\Debug\net8.0-windows\CompactWindow.g.cs
 D:\Repos\Media Player\obj\Debug\net8.0-windows\CompactWindow.baml
 D:\Repos\Media Player\bin\Debug\net8.0-windows\DiscordRPC.dll
 D:\Repos\Media Player\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Media Player.sourcelink.json
