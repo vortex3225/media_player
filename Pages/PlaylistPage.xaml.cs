@@ -124,6 +124,7 @@ namespace Media_Player.Objects
                 {
                     current_playlists.Items.Remove(current_playlists.SelectedItem);
                     PlaylistHandler.DeletePlaylist(selected_name);
+                    StatisticsObject.TotalPlaylists = Math.Clamp(--StatisticsObject.TotalPlaylists, 0, int.MaxValue);
                 }
             }
             else
@@ -277,6 +278,7 @@ namespace Media_Player.Objects
 
                 PlaylistObject new_object = new PlaylistObject(name, extracted_items, item_counts);
                 PlaylistHandler.SavePlaylist(new_object);
+                StatisticsObject.TotalPlaylists++;
                 GeneratePlaylist(new_object);
             }
             else if (name_already_exists)

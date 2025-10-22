@@ -1,5 +1,6 @@
 {
   "resume_on_enter": false,
   "save_files":  false,
-  "drp": true
+  "drp": true,
+  "theme": "light"
 }

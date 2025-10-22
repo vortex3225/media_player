@@ -1,8 +1,11 @@
 ﻿using Media_Player.Objects;
 using Media_Player.Scripts;
+using Media_Player.Windows;
 using Microsoft.Win32;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Packaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,44 +57,104 @@ namespace Media_Player
         private List<ListViewItem> ?before_search_list = null;
 
         public static string format = @"mm\:ss";
-
+        public static string sprite_path = "/Light/";
 
         public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
+        private Stopwatch playtime_watch = new Stopwatch();
+        private Stopwatch session_watch = new Stopwatch();
+        public MainWindow()
+        {
+            InitializeComponent();
+            InitialiseMenuItemIcons();
+            video_out_display.LoadedBehavior = MediaState.Manual;
+            fetched_settings = AppHandler.InitSettings();
+            if (fetched_settings.drp == true) DiscordRichPresenceHandler.InitialiseClient(); else DiscordRichPresenceHandler.Dispose();
+
+            if (fetched_settings.save_files)
+            {
+                List<string> previouslySaved = SettingsHandler.GetPreviouslySavedFiles();
+                if (previouslySaved.Count > 0)
+                {
+                    foreach (string s in previouslySaved)
+                    {
+                        Console.WriteLine(s);
+                    }
+                    LoadFiles(previouslySaved.ToArray(), false);
+                }
+            }
+
+            if (fetched_settings.resume_on_enter)
+            {
+                (string fetched_path, double fetched_position) fetched_media_data = SettingsHandler.GetMediaData();
+                if (!string.IsNullOrEmpty(fetched_media_data.fetched_path) && System.IO.Path.Exists(fetched_media_data.fetched_path))
+                {
+                    TimeSpan video_span = video_out_display.Position;
+                    PlayMedia(fetched_media_data.fetched_path, true, true, false);
+                    video_out_display.Position = TimeSpan.FromSeconds(fetched_media_data.fetched_position);
+                    media_position_slider.Value = (video_span.TotalSeconds / fetched_media_data.fetched_position) * 100;
+                    Console.WriteLine(media_position_slider.Value);
+                    current_pos_display.Text = video_out_display.Position.ToString(format);
+                    current_state = PlayerState.None;
+                }
+            }
+
+            if (fetched_settings.theme == "dark")
+            {
+                App app = App.Current as App;
+                sprite_path = "/Dark/";
+                app.SwitchTheme();
+            }
+
+            playlist_page = new PlaylistPage(playlist_contents.Items);
+            page_display_frame.Navigate(playlist_page);
+            page_display_frame.IsEnabled = false;
+            page_display_frame.Visibility = Visibility.Hidden;
+            video_out_display.MediaEnded += Video_out_display_MediaEnded;
+            this.Closed += MainWindow_Closed;
+
+            if (playlist_contents.Items.Count > 0)
+            {
+                has_items = true;
+            }
+
+            StatisticsObject.Load();
+            session_watch.Start();
+        }
 
         private void InitialiseMenuItemIcons()
         {
             open_file_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/file_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/file_go.png", UriKind.RelativeOrAbsolute))
             };
             open_folder_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/folder_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/folder_go.png", UriKind.RelativeOrAbsolute))
             };
             clear_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/bin_clear.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/bin_clear.png", UriKind.RelativeOrAbsolute))
             };
             open_playlist_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/playlist_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/playlist_go.png", UriKind.RelativeOrAbsolute))
             };
             return_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/cross.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/cross.png", UriKind.RelativeOrAbsolute))
             };
             play_from_playlist_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/menu_play.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/menu_play.png", UriKind.RelativeOrAbsolute))
             };
             clear_saved_options_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/bin_brush.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/bin_brush.png", UriKind.RelativeOrAbsolute))
             };
             change_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/pencil.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites/pencil.png", UriKind.RelativeOrAbsolute))
             };
         }
         public void UpdateVideoPositionBar()
@@ -264,6 +327,7 @@ namespace Media_Player
 
         private void Unbolden()
         {
+            if (playlist_contents.Items.Count <= 0) return;
             ListViewItem? previous = playlist_contents.Items[previously_bold_index] as ListViewItem;
             if (previous != null) previous.FontWeight = FontWeights.Normal;
         }
@@ -271,6 +335,7 @@ namespace Media_Player
         public async Task PlayMedia(string media_file_name, bool overwrite = false, bool increment = true, bool auto_play = true)
         {
             handling_media = true;
+            StatisticsObject.TracksPlayed++;
             string extension = System.IO.Path.GetExtension(media_file_name);
             if (extension != ".mp4")
             {
@@ -322,7 +387,15 @@ namespace Media_Player
             if (increment && opened_playlist != null && auto_play)
             {
                 UtilityHandler.IncrementSong(media_file_name, opened_playlist);
-                song_plays_display.Text = $"Media plays: {UtilityHandler.GetSongPlays(media_file_name, opened_playlist)}";
+                int plays = UtilityHandler.GetSongPlays(media_file_name, opened_playlist);
+                song_plays_display.Text = $"Media plays: {plays}";
+
+                // higher than the currently most listened track --> will change that track without needing to call UtilityHandler.GetMostListenedSong()
+                if (plays > StatisticsObject.MostListenedTrackPlays)
+                {
+                    StatisticsObject.MostListenedTrackPlays = plays;
+                    StatisticsObject.MostListenedTrack = media_file_name;
+                }
             }
             else if (opened_playlist == null)
             {
@@ -336,7 +409,7 @@ namespace Media_Player
                 update_seek_bar_thread.IsBackground = true;
                 update_seek_bar_thread.Start();
             }
-            else if (update_seek_bar_thread.ThreadState == ThreadState.Unstarted && auto_play)
+            else if (update_seek_bar_thread.ThreadState == System.Threading.ThreadState.Unstarted && auto_play)
             {
                 update_seek_bar_thread.Start();
             }
@@ -345,9 +418,10 @@ namespace Media_Player
             {
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                 };
             }));
+            playtime_watch.Start(); // starts the stopwatch to count the time playing songs
             handling_media = false;
             BoldenCurrentlyPlaying();
         }
@@ -477,62 +551,57 @@ namespace Media_Player
             {
                 current_file_index = 0;
             }
-            Console.WriteLine($"Ended video, index: {current_file_index}");
             update_seek_bar_thread = null;
+            playtime_watch.Stop();
             ActionMedia();
         }
-
-        public MainWindow()
+        public void SwitchPlayColor(string dir)
         {
-            InitializeComponent();
-            InitialiseMenuItemIcons();            
-            video_out_display.LoadedBehavior = MediaState.Manual;
-            fetched_settings = AppHandler.InitSettings();
-            if (fetched_settings.drp == true) DiscordRichPresenceHandler.InitialiseClient(); else DiscordRichPresenceHandler.Dispose();
-
-            if (fetched_settings.save_files)
+            previous_song_btn.Content = new Image
             {
-                List<string> previouslySaved = SettingsHandler.GetPreviouslySavedFiles();
-                if (previouslySaved.Count > 0)
-                {
-                    foreach (string s in previouslySaved)
-                    {
-                        Console.WriteLine(s);
-                    }
-                    LoadFiles(previouslySaved.ToArray(), false);
-                }
-            }
-
-            if (fetched_settings.resume_on_enter)
+                Source = new BitmapImage(new Uri($"/Sprites{dir}previous.png", UriKind.RelativeOrAbsolute))
+            };
+            rewind_current_song_btn.Content = new Image
             {
-                (string fetched_path, double fetched_position) fetched_media_data = SettingsHandler.GetMediaData();
-                if (!string.IsNullOrEmpty(fetched_media_data.fetched_path) && System.IO.Path.Exists(fetched_media_data.fetched_path))
-                {
-                    TimeSpan video_span = video_out_display.Position;
-                    PlayMedia(fetched_media_data.fetched_path, true, true, false);
-                    video_out_display.Position = TimeSpan.FromSeconds(fetched_media_data.fetched_position);
-                    media_position_slider.Value = (video_span.TotalSeconds / fetched_media_data.fetched_position) * 100;
-                    Console.WriteLine(media_position_slider.Value);
-                    current_pos_display.Text = video_out_display.Position.ToString(format);
-                    current_state = PlayerState.None;
-                }
-            }
-
-            playlist_page = new PlaylistPage(playlist_contents.Items);
-            page_display_frame.Navigate(playlist_page);
-            page_display_frame.IsEnabled = false;
-            page_display_frame.Visibility = Visibility.Hidden;
-            video_out_display.MediaEnded += Video_out_display_MediaEnded;
-            this.Closed += MainWindow_Closed;
-
-            if (playlist_contents.Items.Count > 0)
+                Source = new BitmapImage(new Uri($"/Sprites{dir}rewind.png", UriKind.RelativeOrAbsolute))
+            };
+            shuffle_btn.Content = new Image
             {
-                has_items = true;
-            }
+                Source = (!is_shuffled) ? new BitmapImage(new Uri($"/Sprites{dir}shuffle_untriggered.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+            };
+            pause_btn.Content = new Image
+            {
+                Source = (current_state == PlayerState.Paused) ? new BitmapImage(new Uri($"/Sprites{dir}pause.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}play.png", UriKind.RelativeOrAbsolute))
+            };
+            repeat_btn.Content = new Image
+            {
+                Source = (!is_looping) ? new BitmapImage(new Uri($"/Sprites{dir}repeat_untriggered.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}repeat_triggered.png", UriKind.RelativeOrAbsolute))
+            };
+            skip_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{dir}skip.png", UriKind.RelativeOrAbsolute))
+            };
+            mute_unmute_btn.Content = new Image
+            {
+                Source = ((int)video_out_display.Volume <= 0) ? new BitmapImage(new Uri($"/Sprites{dir}unmute.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}mute.png", UriKind.RelativeOrAbsolute))
+            };
+            audio_file_image_display.Source = new BitmapImage(new Uri($"/Sprites{dir}audio_file_image.png", UriKind.RelativeOrAbsolute));
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
+            // statistics stuff
+            playtime_watch.Stop();
+            session_watch.Stop();
+            StatisticsObject.TimeListened += playtime_watch.Elapsed.TotalSeconds;
+            StatisticsObject.CurrentSessionTime = session_watch.Elapsed.TotalSeconds;
+            if (StatisticsObject.CurrentSessionTime > StatisticsObject.HighestSessionTime)
+                StatisticsObject.HighestSessionTime = StatisticsObject.CurrentSessionTime;
+            StatisticsObject.AverageSessionTime += (StatisticsObject.CurrentSessionTime - StatisticsObject.AverageSessionTime) / (double)++StatisticsObject.Sessions;
+
+
+
+            StatisticsObject.Save();
             // settings saving
 
             if (fetched_settings.save_files && playlist_contents.Items.Count > 0)
@@ -562,6 +631,7 @@ namespace Media_Player
             }
 
             DiscordRichPresenceHandler.Dispose();
+            current_state = PlayerState.None;
         }
 
         public void Rewind()
@@ -599,7 +669,7 @@ namespace Media_Player
                     current_state = PlayerState.Playing;
                     pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                     };
                     ListViewItem? media_item = playlist_contents.Items[current_file_index] as ListViewItem;
 
@@ -620,9 +690,10 @@ namespace Media_Player
                 current_state = PlayerState.Paused;
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/play.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}play.png", UriKind.RelativeOrAbsolute))
                 };
                 video_out_display.Pause();
+                playtime_watch.Stop();
             }
         }
 
@@ -642,6 +713,19 @@ namespace Media_Player
         private void skip_song_btn_Click(object sender, RoutedEventArgs e)
         {
             Skip();
+        }
+
+        private void view_stats_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            StatsWindow sw = new StatsWindow();
+            sw.ShowDialog();
+        }
+
+        private void clear_stats_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you wish to clear all your stats? This cannot be undone!", "Clearing statistics...", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+            
+            StatisticsObject.Clear();
         }
 
         private void open_file_menu_btn_Click(object sender, RoutedEventArgs e)
@@ -750,7 +834,7 @@ namespace Media_Player
             {
                 repeat_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/repeat_triggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}repeat_triggered.png", UriKind.RelativeOrAbsolute))
                 };
                 is_looping = true;
             }
@@ -758,7 +842,7 @@ namespace Media_Player
             {
                 repeat_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/repeat_untriggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}repeat_untriggered.png", UriKind.RelativeOrAbsolute))
                 };
                 is_looping = false;
             }
@@ -793,7 +877,7 @@ namespace Media_Player
 
                     shuffle_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
                     };
                 }
                 else if (is_shuffled && previous_order.Count > 0)
@@ -813,7 +897,7 @@ namespace Media_Player
                     }
                     shuffle_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
                     };
                     playlist_contents.Items.Clear();
                     foreach (ListViewItem prev_item in previous_order)
@@ -854,6 +938,7 @@ namespace Media_Player
                 current_file_index = playlist_contents.SelectedIndex;
                 current_state = PlayerState.Paused;
                 await PlayMedia(selected_item.Tag.ToString(), true, true);
+                pause_btn.Content = new Image { Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute)) };
             }
         }
 
@@ -958,6 +1043,12 @@ namespace Media_Player
                 SettingsHandler.Clear();
                 fetched_settings.save_files = false;
                 fetched_settings.resume_on_enter = false;
+                if (fetched_settings.theme != "light")
+                {
+                    App app = App.Current as App;
+                    app.SwitchTheme();
+                }
+                fetched_settings.theme = "light";
             }
         }
 
@@ -970,7 +1061,7 @@ namespace Media_Player
                 UpdateVolume();
                 mute_unmute_btn.Content = new Image()
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/mute.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}mute.png", UriKind.RelativeOrAbsolute))
                 };
             }
             else if (volume_slider.Value < 1)
@@ -979,7 +1070,7 @@ namespace Media_Player
                 UpdateVolume();
                 mute_unmute_btn.Content = new Image()
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/unmute.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}unmute.png", UriKind.RelativeOrAbsolute))
                 };
             }
         }

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\Repos\Media Player\App.xaml
-6754862372
-3426833700
-18783372368
+71289444711
+4-69985265
+20-1481270866
 204415464382
-CompactWindow.xaml;MainWindow.xaml;OptionsWindow.xaml;Pages\PlaylistPage.xaml;PlaylistEditPage.xaml;SelectPlaylistWindow.xaml;
+MainWindow.xaml;Pages\PlaylistPage.xaml;Windows\CompactWindow.xaml;Windows\OptionsWindow.xaml;Windows\PlaylistEditPage.xaml;Windows\SelectPlaylistWindow.xaml;Windows\StatsWindow.xaml;
 
 False
 

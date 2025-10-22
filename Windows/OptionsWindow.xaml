@@ -1,0 +1,43 @@
+﻿<Window x:Class="Media_Player.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Media_Player"
+        mc:Ignorable="d"
+        Title="Options" Height="250" Width="250"
+        ResizeMode="NoResize"
+        Icon="/Sprites/media_player.ico"
+        Background="{DynamicResource BackgroundBrush}"
+        ShowInTaskbar="False">
+    <Viewbox Stretch="Uniform">
+        <Grid Height="250" Width="250">
+            <StackPanel x:Name="options_stack" Orientation="Vertical" Height="230" VerticalAlignment="Center">
+                <StackPanel Height="15" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Save opened files" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 139.5, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="save_opened_files_checkbox" IsChecked="False" Click="save_opened_files_checkbox_Click"/>
+                </StackPanel>
+                <StackPanel Margin="0, 5, 0, 0" Height="15" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Resume media (videos only)" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 88, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="resume_checkbox" IsChecked="False" Click="resume_checkbox_Click"/>
+                </StackPanel>
+                <StackPanel Margin="0, 5, 0, 0" Height="15" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Compact mode" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 152.8, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="compact_mode_checkbox" IsChecked="False" Click="compact_mode_checkbox_Click"/>
+                </StackPanel>
+                <StackPanel Margin="0, 5, 0, 0" Height="15" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Discord Rich Presence" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 115.5, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="drp_checkbox" IsChecked="True" Click="drp_checkbox_Click"/>
+                </StackPanel>
+                <StackPanel x:Name="compact_aot_panel" Margin="0, 5, 0, 0" Height="15" Visibility="Collapsed" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Make compact panel always on top" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 55.5, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="compact_always_on_top_check" IsChecked="False" Click="compact_always_on_top_check_Click"/>
+                </StackPanel>
+                <StackPanel x:Name="theme_panel" Margin="0, 5, 0, 0" Height="15" Visibility="Visible" Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Dark mode:" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 171, 0"/>
+                    <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="dark_mode_check" IsChecked="False" Click="dark_mode_check_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>

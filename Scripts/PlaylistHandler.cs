@@ -40,6 +40,33 @@ namespace Media_Player.Scripts
             }
         }
 
+        public static List<PlaylistObject> GetPlaylists()
+        {
+            List<PlaylistObject> fetched = new List<PlaylistObject>();
+            try
+            {
+                using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Open();
+                    string sql = $"SELECT * FROM Playlists";
+                    Console.WriteLine(sql);
+                    using var cmd = new SQLiteCommand(sql, cnn);
+                    using var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        fetched.Add(new PlaylistObject(reader.GetString(0), UtilityHandler.GeneratePlaylistItemList(reader.GetString(1)), UtilityHandler.GeneratePlaylistItemCount(reader.GetString(2))));
+                    }
+                }
+                return fetched;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't load " + ex.Message);
+                return fetched;
+            }
+        }
+
         public static PlaylistObject ?LoadPlaylist(string playlist_name_to_load)
         {
             try

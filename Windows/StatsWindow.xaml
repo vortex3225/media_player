@@ -1,0 +1,43 @@
+﻿<Window x:Class="Media_Player.Windows.StatsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Media_Player.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        ShowInTaskbar="False"
+        Background="{DynamicResource BackgroundBrush}"
+        ResizeMode="NoResize"
+        Title="Media Player Statistics" Height="195" Width="400">
+    <Grid>
+        <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" FontStyle="Italic" FontFamily="Arial" Text="Your statistics" FontSize="30" Margin="0,0,190,146"/>
+        <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" FontFamily="Arial" FontStyle="Italic" Text="(all time)" FontSize="10" Margin="210,18,145,149"/>
+        <Button x:Name="refresh_btn" Click="refresh_btn_Click" FontFamily="Arial" BorderThickness="0" Foreground="White" Background="DarkBlue" FontSize="10" Content="Refresh" Margin="274,16,20,149"/>
+        <StackPanel Margin="0,35,200,0" TextBlock.FontFamily="Arial" TextBlock.FontSize="12">
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Program installation date:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Total listening time:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Total tracks played:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Current session time:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Highest session time:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Average session length:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Most listened track:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Most listened track plays:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Total playlists:</TextBlock>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}">Total tracks across all playlists:</TextBlock>
+        </StackPanel>
+        <StackPanel x:Name="data_Panel" Margin="200,35,0,0" TextBlock.FontFamily="Arial" TextBlock.FontWeight="Bold" TextBlock.FontSize="12" TextBlock.TextAlignment="Left">
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="program_install_date_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="total_listening_time_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="total_tracks_played_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="current_session_time_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="highest_session_time_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="average_session_length_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="most_listened_track_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="most_listened_track_plays_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="total_playlists_display" Text="Unknown"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="all_tracks_in_playlists_display" Text="Unknown"/>
+        </StackPanel>
+    </Grid>
+</Window>
