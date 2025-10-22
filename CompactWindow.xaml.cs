@@ -53,13 +53,13 @@ namespace Media_Player
                     MainWindow.current_state = PlayerState.Playing;
                     pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                     };
                     Master.pause_btn.Dispatcher.Invoke(new Action(() =>
                     {
                         Master.pause_btn.Content = new Image
                         {
-                            Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                            Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                         };
                     }));
                     ListViewItem? media_item = Master.playlist_contents.Items[MainWindow.current_file_index] as ListViewItem;
@@ -80,13 +80,13 @@ namespace Media_Player
                 MainWindow.current_state = PlayerState.Paused;
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/play.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}play.png", UriKind.RelativeOrAbsolute))
                 };
                 Master.pause_btn.Dispatcher.Invoke(new Action(() =>
                 {
                     Master.pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/play.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}play.png", UriKind.RelativeOrAbsolute))
                     };
                 }));
                 Master.video_out_display.Pause();
@@ -100,14 +100,14 @@ namespace Media_Player
             {
                 shuffle_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
                 };
             }
             else
             {
                 shuffle_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
                 };
             }
         }

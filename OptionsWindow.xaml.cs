@@ -129,5 +129,20 @@ namespace Media_Player
             if (settings.drp == true) DiscordRichPresenceHandler.InitialiseClient();
             else DiscordRichPresenceHandler.Dispose();
         }
+
+        private void dark_mode_check_Click(object sender, RoutedEventArgs e)
+        {
+            string prev = settings.theme;
+            if (dark_mode_check.IsChecked == true)
+                settings.theme = "dark";
+            else
+                settings.theme = "light";
+
+            if (settings.theme != prev)
+            {
+                App app = App.Current as App;
+                app.SwitchTheme();
+            }
+        }
     }
 }

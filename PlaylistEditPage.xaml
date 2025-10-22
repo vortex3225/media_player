@@ -5,13 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        Background="{DynamicResource BackgroundBrush}"
         Title="" Height="450" Width="800">
     <Viewbox Stretch="Uniform">
         <Grid Width="804" Height="436">
-            <TextBlock x:Name="playlist_item_count" FontFamily="Arial" FontSize="12" Text="Playlist Items: 0" Margin="10,10,559,410"/>
-            <TextBlock FontFamily="Arial" FontSize="12" Text="Add songs" Margin="572,10,10,410"/>
-            <ListView x:Name="add_song_list" Margin="572,29,10,54"/>
-            <ListView x:Name="playlist_contents" Margin="10,29,256,10" Width="auto" Height="auto"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" x:Name="playlist_item_count" FontFamily="Arial" FontSize="12" Text="Playlist Items: 0" Margin="10,10,559,410"/>
+            <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="12" Text="Add songs" Margin="572,10,10,410"/>
+            <ListView x:Name="add_song_list" Margin="572,29,10,54">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <ListView x:Name="playlist_contents" Margin="10,29,256,10" Width="auto" Height="auto">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
             <Button x:Name="confirm_btn" FontFamily="Arial" Click="confirm_btn_Click" Background="LimeGreen" FontSize="13" Margin="572,389,10,27">Confirm</Button>
             <Button x:Name="change_paths_btn" FontFamily="Arial" Click="change_paths_btn_Click" Background="Orange" FontSize="13" Margin="572,411,10,5" Content="Change Paths"/>
         </Grid>

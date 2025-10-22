@@ -18,6 +18,17 @@
     <None Remove="Sprites\bin_brush.png" />
     <None Remove="Sprites\bin_clear.png" />
     <None Remove="Sprites\cross.png" />
+    <None Remove="Sprites\Dark\mute.png" />
+    <None Remove="Sprites\Dark\pause.png" />
+    <None Remove="Sprites\Dark\play.png" />
+    <None Remove="Sprites\Dark\previous.png" />
+    <None Remove="Sprites\Dark\repeat_triggered.png" />
+    <None Remove="Sprites\Dark\repeat_untriggered.png" />
+    <None Remove="Sprites\Dark\rewind.png" />
+    <None Remove="Sprites\Dark\shuffle_triggered.png" />
+    <None Remove="Sprites\Dark\shuffle_untriggered.png" />
+    <None Remove="Sprites\Dark\skip.png" />
+    <None Remove="Sprites\Dark\unmute.png" />
     <None Remove="Sprites\file_go.png" />
     <None Remove="Sprites\folder_go.png" />
     <None Remove="Sprites\media_player.ico" />
@@ -35,6 +46,11 @@
     <None Remove="Sprites\shuffle_untriggered.png" />
     <None Remove="Sprites\skip.png" />
     <None Remove="Sprites\unmute.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Themes\Dark.xaml" />
+    <Page Remove="Themes\Light.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,23 +76,36 @@
     <Resource Include="Sprites\bin_brush.png" />
     <Resource Include="Sprites\bin_clear.png" />
     <Resource Include="Sprites\cross.png" />
+    <Resource Include="Sprites\Dark\mute.png" />
+    <Resource Include="Sprites\Dark\pause.png" />
+    <Resource Include="Sprites\Dark\play.png" />
+    <Resource Include="Sprites\Dark\previous.png" />
+    <Resource Include="Sprites\Dark\repeat_triggered.png" />
+    <Resource Include="Sprites\Dark\repeat_untriggered.png" />
+    <Resource Include="Sprites\Dark\rewind.png" />
+    <Resource Include="Sprites\Dark\shuffle_triggered.png" />
+    <Resource Include="Sprites\Dark\shuffle_untriggered.png" />
+    <Resource Include="Sprites\Dark\skip.png" />
+    <Resource Include="Sprites\Dark\unmute.png" />
     <Resource Include="Sprites\file_go.png" />
     <Resource Include="Sprites\folder_go.png" />
     <Resource Include="Sprites\media_player.ico" />
     <Resource Include="Sprites\menu_play.png" />
-    <Resource Include="Sprites\mute.png" />
-    <Resource Include="Sprites\pause.png" />
+    <Resource Include="Sprites\Light\mute.png" />
+    <Resource Include="Sprites\Light\pause.png" />
     <Resource Include="Sprites\pencil.png" />
-    <Resource Include="Sprites\play.png" />
+    <Resource Include="Sprites\Light\play.png" />
     <Resource Include="Sprites\playlist_go.png" />
-    <Resource Include="Sprites\previous.png" />
-    <Resource Include="Sprites\repeat_triggered.png" />
-    <Resource Include="Sprites\repeat_untriggered.png" />
-    <Resource Include="Sprites\rewind.png" />
-    <Resource Include="Sprites\shuffle_triggered.png" />
-    <Resource Include="Sprites\shuffle_untriggered.png" />
-    <Resource Include="Sprites\skip.png" />
-    <Resource Include="Sprites\unmute.png" />
+    <Resource Include="Sprites\Light\previous.png" />
+    <Resource Include="Sprites\Light\repeat_triggered.png" />
+    <Resource Include="Sprites\Light\repeat_untriggered.png" />
+    <Resource Include="Sprites\Light\rewind.png" />
+    <Resource Include="Sprites\Light\shuffle_triggered.png" />
+    <Resource Include="Sprites\Light\shuffle_untriggered.png" />
+    <Resource Include="Sprites\Light\skip.png" />
+    <Resource Include="Sprites\Light\unmute.png" />
+    <Resource Include="Themes\Dark.xaml" />
+    <Resource Include="Themes\Light.xaml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -54,7 +54,7 @@ namespace Media_Player
         private List<ListViewItem> ?before_search_list = null;
 
         public static string format = @"mm\:ss";
-
+        public static string sprite_path = "/Light/";
 
         public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
@@ -63,35 +63,35 @@ namespace Media_Player
         {
             open_file_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/file_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}file_go.png", UriKind.RelativeOrAbsolute))
             };
             open_folder_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/folder_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}folder_go.png", UriKind.RelativeOrAbsolute))
             };
             clear_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/bin_clear.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}bin_clear.png", UriKind.RelativeOrAbsolute))
             };
             open_playlist_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/playlist_go.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}playlist_go.png", UriKind.RelativeOrAbsolute))
             };
             return_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/cross.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}cross.png", UriKind.RelativeOrAbsolute))
             };
             play_from_playlist_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/menu_play.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}menu_play.png", UriKind.RelativeOrAbsolute))
             };
             clear_saved_options_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/bin_brush.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}bin_brush.png", UriKind.RelativeOrAbsolute))
             };
             change_menu_btn.Icon = new Image()
             {
-                Source = new BitmapImage(new Uri("/Sprites/pencil.png", UriKind.RelativeOrAbsolute))
+                Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pencil.png", UriKind.RelativeOrAbsolute))
             };
         }
         public void UpdateVideoPositionBar()
@@ -345,7 +345,7 @@ namespace Media_Player
             {
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                 };
             }));
             handling_media = false;
@@ -518,6 +518,14 @@ namespace Media_Player
                 }
             }
 
+            if (fetched_settings.theme != "light")
+            {
+                App app = App.Current as App;
+                app.SwitchTheme();
+                sprite_path = "/Dark/";
+                // InitialiseMenuItemIcons();
+            }
+
             playlist_page = new PlaylistPage(playlist_contents.Items);
             page_display_frame.Navigate(playlist_page);
             page_display_frame.IsEnabled = false;
@@ -599,7 +607,7 @@ namespace Media_Player
                     current_state = PlayerState.Playing;
                     pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/pause.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute))
                     };
                     ListViewItem? media_item = playlist_contents.Items[current_file_index] as ListViewItem;
 
@@ -620,7 +628,7 @@ namespace Media_Player
                 current_state = PlayerState.Paused;
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/play.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}play.png", UriKind.RelativeOrAbsolute))
                 };
                 video_out_display.Pause();
             }
@@ -750,7 +758,7 @@ namespace Media_Player
             {
                 repeat_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/repeat_triggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}repeat_triggered.png", UriKind.RelativeOrAbsolute))
                 };
                 is_looping = true;
             }
@@ -758,7 +766,7 @@ namespace Media_Player
             {
                 repeat_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/repeat_untriggered.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}repeat_untriggered.png", UriKind.RelativeOrAbsolute))
                 };
                 is_looping = false;
             }
@@ -793,7 +801,7 @@ namespace Media_Player
 
                     shuffle_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
                     };
                 }
                 else if (is_shuffled && previous_order.Count > 0)
@@ -813,7 +821,7 @@ namespace Media_Player
                     }
                     shuffle_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri("/Sprites/shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
                     };
                     playlist_contents.Items.Clear();
                     foreach (ListViewItem prev_item in previous_order)
@@ -970,7 +978,7 @@ namespace Media_Player
                 UpdateVolume();
                 mute_unmute_btn.Content = new Image()
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/mute.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}mute.png", UriKind.RelativeOrAbsolute))
                 };
             }
             else if (volume_slider.Value < 1)
@@ -979,7 +987,7 @@ namespace Media_Player
                 UpdateVolume();
                 mute_unmute_btn.Content = new Image()
                 {
-                    Source = new BitmapImage(new Uri("/Sprites/unmute.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{sprite_path}unmute.png", UriKind.RelativeOrAbsolute))
                 };
             }
         }
