@@ -14,7 +14,7 @@
     <Grid>
         <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" FontStyle="Italic" FontFamily="Arial" Text="Your statistics" FontSize="30" Margin="0,0,190,146"/>
         <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontWeight="Bold" FontFamily="Arial" FontStyle="Italic" Text="(all time)" FontSize="10" Margin="210,18,145,149"/>
-        <Button x:Name="refresh_btn" Click="refresh_btn_Click" FontFamily="Arial" FontSize="10" Content="Refresh" Margin="274,16,20,149"/>
+        <Button x:Name="refresh_btn" Click="refresh_btn_Click" FontFamily="Arial" BorderThickness="0" Foreground="White" Background="DarkBlue" FontSize="10" Content="Refresh" Margin="274,16,20,149"/>
         <StackPanel Margin="0,35,200,0" TextBlock.FontFamily="Arial" TextBlock.FontSize="12">
             <TextBlock Foreground="{DynamicResource ForegroundBrush}">Program installation date:</TextBlock>
             <TextBlock Foreground="{DynamicResource ForegroundBrush}">Total listening time:</TextBlock>

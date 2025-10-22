@@ -30,13 +30,14 @@ namespace Media_Player.Windows
         {
             total_listening_time_display.Text = $"{Math.Round(StatisticsObject.TimeListened / 60, 2)} min(s)";
             total_playlists_display.Text = $"{StatisticsObject.TotalPlaylists} playlists";
-            total_tracks_played_display.Text = $"{StatisticsObject.TotalTracksInPlaylists} tracks";
+            total_tracks_played_display.Text = $"{StatisticsObject.TracksPlayed} tracks";
             average_session_length_display.Text = $"{Math.Round(StatisticsObject.AverageSessionTime / 60, 2)} min(s)";
             current_session_time_display.Text = $"{Math.Round(StatisticsObject.CurrentSessionTime / 60, 2)} min(s)";
             highest_session_time_display.Text = $"{Math.Round(StatisticsObject.HighestSessionTime / 60, 2)} min(s)";
-            most_listened_track_display.Text = StatisticsObject.MostListenedTrack;
+            most_listened_track_display.Text = System.IO.Path.GetFileNameWithoutExtension(StatisticsObject.MostListenedTrack);
             most_listened_track_plays_display.Text = StatisticsObject.MostListenedTrackPlays.ToString();
             program_install_date_display.Text = StatisticsObject.InstallationDate.ToString("dd.MM.yyyy");
+            all_tracks_in_playlists_display.Text = $"{StatisticsObject.TotalTracksInPlaylists} tracks";
         }
 
         private void refresh_btn_Click(object sender, RoutedEventArgs e)

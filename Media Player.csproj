@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>media_player.ico</ApplicationIcon>
+    <ApplicationIcon>Sprites\Light\media_player.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +19,7 @@
     <None Remove="Sprites\bin_clear.png" />
     <None Remove="Sprites\cross.png" />
     <None Remove="Sprites\Dark\audio_file_image.png" />
+    <None Remove="Sprites\Dark\media_player.ico" />
     <None Remove="Sprites\Dark\mute.png" />
     <None Remove="Sprites\Dark\pause.png" />
     <None Remove="Sprites\Dark\play.png" />
@@ -33,6 +34,7 @@
     <None Remove="Sprites\file_go.png" />
     <None Remove="Sprites\folder_go.png" />
     <None Remove="Sprites\Light\audio_file_image.png" />
+    <None Remove="Sprites\Light\media_player.ico" />
     <None Remove="Sprites\media_player.ico" />
     <None Remove="Sprites\menu_play.png" />
     <None Remove="Sprites\mute.png" />
@@ -62,7 +64,6 @@
     <Content Include="media.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="media_player.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,11 +75,13 @@
 
   <ItemGroup>
     <Resource Include="Sprites\1x1_invis_icon.ico" />
-    <Resource Include="Sprites\audio_file_image.png" />
     <Resource Include="Sprites\bin_brush.png" />
     <Resource Include="Sprites\bin_clear.png" />
     <Resource Include="Sprites\cross.png" />
     <Resource Include="Sprites\Dark\audio_file_image.png" />
+    <Content Include="Sprites\Dark\media_player.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Sprites\Dark\mute.png" />
     <Resource Include="Sprites\Dark\pause.png" />
     <Resource Include="Sprites\Dark\play.png" />
@@ -93,7 +96,9 @@
     <Resource Include="Sprites\file_go.png" />
     <Resource Include="Sprites\folder_go.png" />
     <Resource Include="Sprites\Light\audio_file_image.png" />
-    <Resource Include="Sprites\media_player.ico" />
+    <Content Include="Sprites\Light\media_player.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Sprites\menu_play.png" />
     <Resource Include="Sprites\Light\mute.png" />
     <Resource Include="Sprites\Light\pause.png" />

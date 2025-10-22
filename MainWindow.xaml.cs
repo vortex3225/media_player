@@ -335,6 +335,7 @@ namespace Media_Player
         public async Task PlayMedia(string media_file_name, bool overwrite = false, bool increment = true, bool auto_play = true)
         {
             handling_media = true;
+            StatisticsObject.TracksPlayed++;
             string extension = System.IO.Path.GetExtension(media_file_name);
             if (extension != ".mp4")
             {
@@ -369,7 +370,6 @@ namespace Media_Player
                 media_title_display.Text = name;
             }
             video_out_display.Volume = volume_slider.Value / 100;
-            StatisticsObject.TracksPlayed++;
 
             if (auto_play)
             {
@@ -938,6 +938,7 @@ namespace Media_Player
                 current_file_index = playlist_contents.SelectedIndex;
                 current_state = PlayerState.Paused;
                 await PlayMedia(selected_item.Tag.ToString(), true, true);
+                pause_btn.Content = new Image { Source = new BitmapImage(new Uri($"/Sprites{sprite_path}pause.png", UriKind.RelativeOrAbsolute)) };
             }
         }
 
