@@ -82,9 +82,9 @@
     <Resource Include="Sprites\bin_clear.png" />
     <Resource Include="Sprites\cross.png" />
     <Resource Include="Sprites\Dark\audio_file_image.png" />
-    <Content Include="Sprites\Dark\media_player.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Sprites\Dark\media_player.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\Dark\mute.png" />
     <Resource Include="Sprites\Dark\pause.png" />
     <Resource Include="Sprites\Dark\play.png" />
@@ -99,9 +99,9 @@
     <Resource Include="Sprites\file_go.png" />
     <Resource Include="Sprites\folder_go.png" />
     <Resource Include="Sprites\Light\audio_file_image.png" />
-    <Content Include="Sprites\Light\media_player.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Sprites\Light\media_player.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\menu_play.png" />
     <Resource Include="Sprites\Light\mute.png" />
     <Resource Include="Sprites\Light\pause.png" />

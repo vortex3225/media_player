@@ -1,3 +1,5 @@
+D:\C# Projects\Media Player\Sprites\Dark\media_player.ico
+D:\C# Projects\Media Player\Sprites\Light\media_player.ico
 D:\C# Projects\Media Player\Media Player.exe
 D:\C# Projects\Media Player\app_config.json
 D:\C# Projects\Media Player\media.db

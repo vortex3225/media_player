@@ -13,22 +13,14 @@ D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\System.Drawing.Common.d
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\System.Private.Windows.Core.dll
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\SQLite.Interop.dll
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.csproj.AssemblyReference.cache
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\CompactWindow.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\MainWindow.g.cs
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\OptionsWindow.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Pages\PlaylistPage.g.cs
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\PlaylistEditPage.g.cs
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\SelectPlaylistWindow.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\App.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_Content.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_MarkupCompile.cache
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player_MarkupCompile.lref
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\CompactWindow.baml
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\MainWindow.baml
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\OptionsWindow.baml
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Pages\PlaylistPage.baml
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\PlaylistEditPage.baml
-D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\SelectPlaylistWindow.baml
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.g.resources
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.GeneratedMSBuildEditorConfig.editorconfig
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.AssemblyInfoInputs.cache
@@ -43,3 +35,16 @@ D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\ref\Media Player.dll
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\DiscordRPC.dll
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Newtonsoft.Json.dll
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.sourcelink.json
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Sprites\Dark\media_player.ico
+D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Sprites\Light\media_player.ico
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\CompactWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\OptionsWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\PlaylistEditPage.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\SelectPlaylistWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\StatsWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\App.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\CompactWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\OptionsWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\PlaylistEditPage.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\SelectPlaylistWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\StatsWindow.baml

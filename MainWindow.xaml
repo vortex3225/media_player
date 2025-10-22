@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
-        Icon="/Sprites/Light/media_player.ico"
+        Icon="/Sprites/media_player.ico"
         Background="{DynamicResource BackgroundBrush}"
         Title="Media Player" Height="550" Width="950">
     <DockPanel LastChildFill="False">
