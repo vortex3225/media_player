@@ -246,6 +246,11 @@ namespace Media_Player
         private int previously_bold_index = 0;
         private void BoldenCurrentlyPlaying()
         {
+            foreach (ListViewItem xpp in playlist_contents.Items) // resets all the fonts
+            {
+                xpp.FontWeight = FontWeights.Normal;
+            }
+
             ListViewItem? current = playlist_contents.Items[current_file_index] as ListViewItem;
 
             if (previously_bold_index != current_file_index && previously_bold_index < playlist_contents.Items.Count)
@@ -829,7 +834,16 @@ namespace Media_Player
 
         private void shuffle_btn_Click(object sender, RoutedEventArgs e)
         {
-            ShuffleMain();            
+            ShuffleMain();
+
+            foreach (ListViewItem item in playlist_contents.Items)
+            {
+                if (item.Content.ToString().Contains(media_title_display.Text))
+                {
+                    item.FontWeight = FontWeights.Bold;
+                    break;
+                }
+            }
         }
 
         private async void playlist_contents_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -855,10 +869,10 @@ namespace Media_Player
                     ListViewItem n = playlist_contents.Items[x] as ListViewItem;
                     n.FontWeight = FontWeights.Normal;
 
-                    if (video_out_display.Source.LocalPath.Contains(item.Content.ToString()))
+                    if (video_out_display.Source != null && video_out_display.Source.LocalPath.Contains(item.Content.ToString()))
                     {
-                        current_file_index = x;
                         BoldenCurrentlyPlaying();
+                        current_file_index = x;
                     }
                     x++;
                 }

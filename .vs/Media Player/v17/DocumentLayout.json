@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|d:\\repos\\media player\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|d:\\repos\\media player\\scripts\\utilityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|solutionrelative:scripts\\utilityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|d:\\repos\\media player\\compactwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|solutionrelative:compactwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|d:\\repos\\media player\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE1BB038-8D2E-4E42-9495-C0039BAD3C05}|Media Player.csproj|d:\\repos\\media player\\playlisteditpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -57,21 +61,36 @@
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "CompactWindow.xaml",
+              "DocumentMoniker": "D:\\Repos\\Media Player\\CompactWindow.xaml",
+              "RelativeDocumentMoniker": "CompactWindow.xaml",
+              "ToolTip": "D:\\Repos\\Media Player\\CompactWindow.xaml",
+              "RelativeToolTip": "CompactWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-09-30T18:43:07.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "UtilityHandler.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\Scripts\\UtilityHandler.cs",
               "RelativeDocumentMoniker": "Scripts\\UtilityHandler.cs",
               "ToolTip": "D:\\Repos\\Media Player\\Scripts\\UtilityHandler.cs",
               "RelativeToolTip": "Scripts\\UtilityHandler.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADgvzUAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-13T18:54:49.239Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PlaylistEditPage.xaml.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\PlaylistEditPage.xaml.cs",
               "RelativeDocumentMoniker": "PlaylistEditPage.xaml.cs",
@@ -79,12 +98,11 @@
               "RelativeToolTip": "PlaylistEditPage.xaml.cs",
               "ViewState": "AgIAAOQAAAAAAAAAAAAAAPQAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-13T18:48:07.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-13T18:48:07.272Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "SettingsHandler.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\Scripts\\SettingsHandler.cs",
               "RelativeDocumentMoniker": "Scripts\\SettingsHandler.cs",
@@ -96,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "OptionsWindow.xaml",
               "DocumentMoniker": "D:\\Repos\\Media Player\\OptionsWindow.xaml",
               "RelativeDocumentMoniker": "OptionsWindow.xaml",
@@ -107,7 +125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "OptionsWindow.xaml.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\OptionsWindow.xaml.cs",
               "RelativeDocumentMoniker": "OptionsWindow.xaml.cs",
@@ -115,12 +133,11 @@
               "RelativeToolTip": "OptionsWindow.xaml.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAgwB8AAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-13T18:26:45.217Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-13T18:26:45.217Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "AppSettings.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\Objects\\AppSettings.cs",
               "RelativeDocumentMoniker": "Objects\\AppSettings.cs",
@@ -132,7 +149,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DiscordRichPresenceHandler.cs",
               "DocumentMoniker": "D:\\Repos\\Media Player\\Scripts\\DiscordRichPresenceHandler.cs",
               "RelativeDocumentMoniker": "Scripts\\DiscordRichPresenceHandler.cs",
@@ -140,20 +157,18 @@
               "RelativeToolTip": "Scripts\\DiscordRichPresenceHandler.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAAwCoAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-13T18:13:35.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-13T18:13:35.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\Repos\\Media Player\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
               "ToolTip": "D:\\Repos\\Media Player\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-08-07T13:13:18.077Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-07T13:13:18.077Z"
             },
             {
               "$type": "Document",
@@ -163,7 +178,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "D:\\Repos\\Media Player\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAPQCAAAAAAAAAAAYwA8DAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAOUAAAAAAAAAAADwv/gAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-06T13:04:54.933Z",
               "EditorCaption": ""
