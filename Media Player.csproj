@@ -18,6 +18,7 @@
     <None Remove="Sprites\bin_brush.png" />
     <None Remove="Sprites\bin_clear.png" />
     <None Remove="Sprites\cross.png" />
+    <None Remove="Sprites\Dark\audio_file_image.png" />
     <None Remove="Sprites\Dark\mute.png" />
     <None Remove="Sprites\Dark\pause.png" />
     <None Remove="Sprites\Dark\play.png" />
@@ -31,6 +32,7 @@
     <None Remove="Sprites\Dark\unmute.png" />
     <None Remove="Sprites\file_go.png" />
     <None Remove="Sprites\folder_go.png" />
+    <None Remove="Sprites\Light\audio_file_image.png" />
     <None Remove="Sprites\media_player.ico" />
     <None Remove="Sprites\menu_play.png" />
     <None Remove="Sprites\mute.png" />
@@ -76,6 +78,7 @@
     <Resource Include="Sprites\bin_brush.png" />
     <Resource Include="Sprites\bin_clear.png" />
     <Resource Include="Sprites\cross.png" />
+    <Resource Include="Sprites\Dark\audio_file_image.png" />
     <Resource Include="Sprites\Dark\mute.png" />
     <Resource Include="Sprites\Dark\pause.png" />
     <Resource Include="Sprites\Dark\play.png" />
@@ -89,6 +92,7 @@
     <Resource Include="Sprites\Dark\unmute.png" />
     <Resource Include="Sprites\file_go.png" />
     <Resource Include="Sprites\folder_go.png" />
+    <Resource Include="Sprites\Light\audio_file_image.png" />
     <Resource Include="Sprites\media_player.ico" />
     <Resource Include="Sprites\menu_play.png" />
     <Resource Include="Sprites\Light\mute.png" />

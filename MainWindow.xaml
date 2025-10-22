@@ -44,7 +44,7 @@
                     <TextBlock x:Name="playlist_items_display" Foreground="{DynamicResource ForegroundBrush}" TextAlignment="Center" Text="Items: 0" FontFamily="Arial" FontSize="12" Canvas.Left="739" Canvas.Top="488" HorizontalAlignment="Left" VerticalAlignment="Center" Width="211"/>
                     <Canvas Height="318" Width="672" Canvas.Left="46" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <MediaElement x:Name="video_out_display" Visibility="Visible" MediaOpened="video_out_display_MediaOpened" Source="" Height="318" MediaEnded="Video_out_display_MediaEnded" Width="672"/>
-                        <Image Visibility="Hidden" x:Name="audio_file_image_display" Width="252" Height="252" Canvas.Left="210" Source="/Sprites/audio_file_image.png" Canvas.Top="33"/>
+                        <Image Visibility="Hidden" x:Name="audio_file_image_display" Width="252" Height="252" Canvas.Left="210" Source="/Sprites/Light/audio_file_image.png" Canvas.Top="33"/>
                         <TextBlock Visibility="Hidden" x:Name="audio_file_extension_display" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Segoe Inter" FontSize="35" TextAlignment="Left" Text="unknown" Canvas.Left="425" Canvas.Top="243" Height="40" Width="237" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Canvas>
                     <StackPanel x:Name="media_info_panel" Orientation="Vertical" Height="49" Width="632" Canvas.Left="66" Canvas.Top="333" HorizontalAlignment="Center" VerticalAlignment="Top">

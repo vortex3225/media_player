@@ -16,7 +16,7 @@ namespace Media_Player.Objects
         public static double CurrentSessionTime { get; set; } = 0;
         public static double HighestSessionTime { get; set; } = 0;
         public static double AverageSessionTime { get; set; } = 0;
-        private static int Sessions {  get; set; } = 0;
+        public static int Sessions {  get; set; } = 0;
         public static int TracksPlayed { get; set; } = 0;
         public static string MostListenedTrack { get; set; } = string.Empty;
         public static int MostListenedTrackPlays { get; set; } = 0;
@@ -32,7 +32,7 @@ namespace Media_Player.Objects
 
         public static void Clear()
         {
-            InstallationDate = DateTime.MinValue;
+            InstallationDate = DateTime.Now;
             TimeListened = 0;
             CurrentSessionTime = 0;
             HighestSessionTime = 0;
@@ -61,9 +61,9 @@ namespace Media_Player.Objects
 
                     while (reader.Read())
                     {
-                        InstallationDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(0)).ToLocalTime().Date;
+                        InstallationDate = (reader.GetInt64(0) == 0 ? DateTime.Now : DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(0)).ToLocalTime().Date);
                         TimeListened = reader.GetDouble(1);
-                        HighestSessionTime = reader.GetInt32(2);
+                        HighestSessionTime = reader.GetDouble(2);
                         AverageSessionTime = reader.GetDouble(3);
                         TracksPlayed = reader.GetInt32(4);
                         MostListenedTrack = reader.GetString(5);
@@ -93,7 +93,7 @@ namespace Media_Player.Objects
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show($"Failed to load statistics: {ex.Message}");
+                System.Windows.MessageBox.Show($"Failed to load statistics: {ex.Message} {ex.StackTrace}");
             }
         }
         public static void Save()
@@ -101,7 +101,6 @@ namespace Media_Player.Objects
             try
             {
                 long unix_secs = ((DateTimeOffset)InstallationDate).ToUnixTimeSeconds();
-                AverageSessionTime += (CurrentSessionTime - AverageSessionTime) / (double)++Sessions;
                 TotalPlaylists = UtilityHandler.GetPlaylistCount();
 
                 using (SQLiteConnection cnn = new SQLiteConnection(LCS()))

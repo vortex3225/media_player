@@ -23,6 +23,11 @@ namespace Media_Player.Windows
         public StatsWindow()
         {
             InitializeComponent();
+            Display();
+        }
+
+        private void Display()
+        {
             total_listening_time_display.Text = $"{Math.Round(StatisticsObject.TimeListened / 60, 2)} min(s)";
             total_playlists_display.Text = $"{StatisticsObject.TotalPlaylists} playlists";
             total_tracks_played_display.Text = $"{StatisticsObject.TotalTracksInPlaylists} tracks";
@@ -31,6 +36,13 @@ namespace Media_Player.Windows
             highest_session_time_display.Text = $"{Math.Round(StatisticsObject.HighestSessionTime / 60, 2)} min(s)";
             most_listened_track_display.Text = StatisticsObject.MostListenedTrack;
             most_listened_track_plays_display.Text = StatisticsObject.MostListenedTrackPlays.ToString();
+            program_install_date_display.Text = StatisticsObject.InstallationDate.ToString("dd.MM.yyyy");
+        }
+
+        private void refresh_btn_Click(object sender, RoutedEventArgs e)
+        {
+            StatisticsObject.Save();
+            Display();
         }
     }
 }

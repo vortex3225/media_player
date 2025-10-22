@@ -278,6 +278,7 @@ namespace Media_Player.Objects
 
                 PlaylistObject new_object = new PlaylistObject(name, extracted_items, item_counts);
                 PlaylistHandler.SavePlaylist(new_object);
+                StatisticsObject.TotalPlaylists++;
                 GeneratePlaylist(new_object);
             }
             else if (name_already_exists)

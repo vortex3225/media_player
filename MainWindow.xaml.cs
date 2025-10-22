@@ -585,6 +585,7 @@ namespace Media_Player
             {
                 Source = ((int)video_out_display.Volume <= 0) ? new BitmapImage(new Uri($"/Sprites{dir}unmute.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}mute.png", UriKind.RelativeOrAbsolute))
             };
+            audio_file_image_display.Source = new BitmapImage(new Uri($"/Sprites{dir}audio_file_image.png", UriKind.RelativeOrAbsolute));
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
@@ -596,7 +597,7 @@ namespace Media_Player
             StatisticsObject.CurrentSessionTime = session_watch.Elapsed.TotalSeconds;
             if (StatisticsObject.CurrentSessionTime > StatisticsObject.HighestSessionTime)
                 StatisticsObject.HighestSessionTime = StatisticsObject.CurrentSessionTime;
-
+            StatisticsObject.AverageSessionTime += (StatisticsObject.CurrentSessionTime - StatisticsObject.AverageSessionTime) / (double)++StatisticsObject.Sessions;
 
 
 
@@ -630,6 +631,7 @@ namespace Media_Player
             }
 
             DiscordRichPresenceHandler.Dispose();
+            current_state = PlayerState.None;
         }
 
         public void Rewind()
