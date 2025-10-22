@@ -10,27 +10,27 @@
         Title="Media Player" Height="550" Width="950">
     <DockPanel LastChildFill="False">
         <Menu DockPanel.Dock="Top" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}">
-            <MenuItem x:Name="file_menu_btn" Header="File">
-                <MenuItem x:Name="open_file_menu_btn" Header="Open File" Click="open_file_menu_btn_Click"/>
-                <MenuItem x:Name="open_folder_menu_btn" Header="Open Folder" Click="open_folder_menu_btn_Click"/>
-                <MenuItem x:Name="clear_menu_btn" Header="Clear opened files" Click="clear_menu_btn_Click"/>
+            <MenuItem x:Name="file_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="File">
+                <MenuItem x:Name="open_file_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open File" Click="open_file_menu_btn_Click"/>
+                <MenuItem x:Name="open_folder_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open Folder" Click="open_folder_menu_btn_Click"/>
+                <MenuItem x:Name="clear_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Clear opened files" Click="clear_menu_btn_Click"/>
             </MenuItem>
-            <MenuItem x:Name="options_menu_btn" Header="Options">
-                <MenuItem x:Name="change_menu_btn" Header="Change Options" Click="options_menu_btn_Click"/>
-                <MenuItem x:Name="clear_saved_options_menu_btn" Click="clear_saved_options_menu_btn_Click" Header="Clear saved options" Icon="/Sprites/bin_brush.png"/>
+            <MenuItem x:Name="options_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Options">
+                <MenuItem x:Name="change_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Change Options" Click="options_menu_btn_Click"/>
+                <MenuItem x:Name="clear_saved_options_menu_btn" Background="{DynamicResource BackgroundBrush}" Click="clear_saved_options_menu_btn_Click" Header="Clear saved options" Icon="/Sprites/bin_brush.png"/>
             </MenuItem>
-            <MenuItem Header="Playlists">
-                <MenuItem x:Name="open_playlist_menu_btn" Click="open_playlist_menu_btn_Click" Header="View"/>
-                <MenuItem x:Name="return_menu_btn" Header="Return to media player" Icon="./Sprites/1x1_invis_icon.ico" Click="return_menu_btn_Click"/>
-                <MenuItem x:Name="play_from_playlist_menu_btn" Header="Play from playlist" Icon="./Sprites/1x1_invis_icon.ico" Click="play_from_playlist_menu_btn_Click"/>
+            <MenuItem Header="Playlists" Background="{DynamicResource BackgroundBrush}">
+                <MenuItem x:Name="open_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Click="open_playlist_menu_btn_Click" Header="View"/>
+                <MenuItem x:Name="return_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Return to media player" Icon="./Sprites/1x1_invis_icon.ico" Click="return_menu_btn_Click"/>
+                <MenuItem x:Name="play_from_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Play from playlist" Icon="./Sprites/1x1_invis_icon.ico" Click="play_from_playlist_menu_btn_Click"/>
             </MenuItem>
             <MenuItem x:Name="info_menu_btn" Header="Help" Click="info_menu_btn_Click"/>
         </Menu>
         <Viewbox Stretch="Uniform">
             <Grid Width="950" Height="515">
                 <Canvas Visibility="Visible" x:Name="media_controls">
-                    <TextBox x:Name="opened_searchbox" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="13" TextAlignment="Center" TextChanged="opened_searchbox_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Top" Width="211" Canvas.Left="739" Canvas.Top="18" Height="17" UndoLimit="0"/>
-                    <ListView x:Name="playlist_contents" SelectionChanged="playlist_contents_SelectionChanged" Height="445" Width="211" HorizontalAlignment="Center" Canvas.Left="739" VerticalAlignment="Top" Canvas.Top="39">
+                    <TextBox x:Name="opened_searchbox" Foreground="{DynamicResource ForegroundBrush}" Background="{DynamicResource BackgroundBrush}" FontFamily="Arial" FontSize="13" TextAlignment="Center" TextChanged="opened_searchbox_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Top" Width="211" Canvas.Left="739" Canvas.Top="18" Height="17" UndoLimit="0"/>
+                    <ListView x:Name="playlist_contents" Background="{DynamicResource BackgroundBrush}" SelectionChanged="playlist_contents_SelectionChanged" Height="445" Width="211" HorizontalAlignment="Center" Canvas.Left="739" VerticalAlignment="Top" Canvas.Top="39">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>

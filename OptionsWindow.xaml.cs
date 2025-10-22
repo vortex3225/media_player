@@ -44,7 +44,7 @@ namespace Media_Player
             resume_checkbox.IsChecked = settings.resume_on_enter;
             save_opened_files_checkbox.IsChecked = settings.save_files;
             drp_checkbox.IsChecked = settings.drp;
-
+            dark_mode_check.IsChecked = settings.theme == "dark";
             this.Closing += OptionsWindow_Closing;
             actual = window;
         }

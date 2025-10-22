@@ -31,6 +31,11 @@ namespace Media_Player
                 current_theme = "Light";
 
             Application.Current.Resources.MergedDictionaries[1].Source = new Uri($"/Themes/{current_theme}.xaml", UriKind.RelativeOrAbsolute);
+
+            MainWindow mw = Application.Current.MainWindow as MainWindow;
+            string to_ret = (current_theme == "Light" ? "/Light/" : "/Dark/");
+
+            mw.SwitchPlayColor(to_ret);
         }
     }
 

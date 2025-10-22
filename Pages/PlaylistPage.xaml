@@ -19,7 +19,7 @@
                 <Button x:Name="remove_selected_playlist_btn" FontFamily="Arial" Click="remove_selected_playlist_btn_Click" FontSize="11" Background="Red" Height="16" Width="92" Margin="35, 0, 0, 0">Remove selected</Button>
                 <Button x:Name="load_selected_playlist_btn" FontFamily="Arial" Click="load_selected_playlist_btn_Click" FontSize="11" Background="Green" Height="16" Width="92" Margin="35, 0, 0, 0">Load selected</Button>
             </StackPanel>
-            <ListView x:Name="current_playlists" Margin="18,69,311,139">
+            <ListView x:Name="current_playlists" Background="{DynamicResource BackgroundBrush}" Margin="18,69,311,139">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
@@ -49,7 +49,7 @@
                 <Button x:Name="select_all_btn" FontFamily="Arial" FontSize="12" Click="select_all_btn_Click" Background="LightBlue" Width="123">Select all</Button>
                 <Button x:Name="deselect_all_btn" FontFamily="Arial" Width="123" Click="deselect_all_btn_Click" Background="LightBlue" Margin="36,0,0,0" FontSize="12" Content="Deselect all"/>
             </StackPanel>
-            <ListView x:Name="opened_files_list" SelectionChanged="opened_files_list_SelectionChanged" Margin="508,91,10,10" SelectionMode="Extended">
+            <ListView x:Name="opened_files_list" Background="{DynamicResource BackgroundBrush}" SelectionChanged="opened_files_list_SelectionChanged" Margin="508,91,10,10" SelectionMode="Extended">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
