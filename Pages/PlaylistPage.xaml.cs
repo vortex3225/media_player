@@ -124,6 +124,7 @@ namespace Media_Player.Objects
                 {
                     current_playlists.Items.Remove(current_playlists.SelectedItem);
                     PlaylistHandler.DeletePlaylist(selected_name);
+                    StatisticsObject.TotalPlaylists = Math.Clamp(--StatisticsObject.TotalPlaylists, 0, int.MaxValue);
                 }
             }
             else

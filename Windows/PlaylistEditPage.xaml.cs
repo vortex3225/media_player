@@ -42,21 +42,21 @@ namespace Media_Player
             return result;
         }
 
-        private object? GetItemWithName(string name, ListView target)
-        {
-            foreach (var item in target.Items)
-            {
-                if (item is ListViewItem listview && listview.Tag?.ToString() == name)
-                {
-                    return listview;
-                }
-                else if (item is CheckBox checkbox && checkbox.Tag?.ToString() == name)
-                {
-                    return checkbox;
-                }
-            }
-            return null;
-        }
+        //private object? GetItemWithName(string name, ListView target)
+        //{
+        //    foreach (var item in target.Items)
+        //    {
+        //        if (item is ListViewItem listview && listview.Tag?.ToString() == name)
+        //        {
+        //            return listview;
+        //        }
+        //        else if (item is CheckBox checkbox && checkbox.Tag?.ToString() == name)
+        //        {
+        //            return checkbox;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         public PlaylistEditPage(string playlist_name, ItemCollection opened_file_coll, PlaylistPage sender)
         {
@@ -175,6 +175,9 @@ namespace Media_Player
 
                         Are you sure you wish to apply these edits? (This action CANNOT be reverted!)
                         """;
+
+                    int amount_for_statistics = new_additions_string.Count - unchecked_items.Count;
+
                     if (MessageBox.Show(changes, "Confirming changes...", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                     {
                         string name = fetched_playlist.name;
@@ -204,6 +207,7 @@ namespace Media_Player
                         PlaylistHandler.DeletePlaylist(name);
                         PlaylistHandler.SavePlaylist(edited_playlist);
                         main_page.GeneratePlaylist(edited_playlist);
+                        StatisticsObject.TotalTracksInPlaylists = Math.Clamp(StatisticsObject.TotalTracksInPlaylists + amount_for_statistics, 0, int.MaxValue); // so it doesnt turn negative
                         MessageBox.Show($"Completed edit of {name}!", "Completed playlist editing", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }

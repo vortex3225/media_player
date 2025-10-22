@@ -24,6 +24,10 @@
                 <MenuItem x:Name="return_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Return to media player" Icon="./Sprites/1x1_invis_icon.ico" Click="return_menu_btn_Click"/>
                 <MenuItem x:Name="play_from_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Play from playlist" Icon="./Sprites/1x1_invis_icon.ico" Click="play_from_playlist_menu_btn_Click"/>
             </MenuItem>
+            <MenuItem x:Name="stats_menu_btn" Header = "Statistics">
+                <MenuItem x:Name="view_stats_menu_btn" Header="View" Background="{DynamicResource BackgroundBrush}" Click="view_stats_menu_btn_Click"/>
+                <MenuItem x:Name="clear_stats_menu_btn" Header="Clear statistics" Background="{DynamicResource BackgroundBrush}" Click="clear_stats_menu_btn_Click"/>
+            </MenuItem>
             <MenuItem x:Name="info_menu_btn" Header="Help" Click="info_menu_btn_Click"/>
         </Menu>
         <Viewbox Stretch="Uniform">

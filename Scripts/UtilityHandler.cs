@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Media_Player.Scripts
 {
@@ -32,6 +33,45 @@ namespace Media_Player.Scripts
             return generated;
         }
 
+        public static (string, int) GetMostListenedSong()
+        {
+            List<PlaylistObject> ?playlists = PlaylistHandler.GetPlaylists();
+            if (playlists == null) return (string.Empty, 0);
+
+            int highest_amm = 0;
+            string highest_name = string.Empty;
+
+            foreach (var playlist in playlists)
+            {
+                foreach (var (songName, playCount) in playlist.item_playcount)
+                {
+                    if (playCount > highest_amm)
+                    {
+                        highest_amm = playCount;
+                        highest_name = songName;
+                    }
+                }
+            }
+
+            return (highest_name, highest_amm);
+        }
+
+        public static int GetPlaylistCount()
+        {
+            return PlaylistHandler.GetPlaylists().Count;
+        }
+
+        public static int GetTotalTracksInPlaylists()
+        {
+            int amm = 0;
+
+            foreach (PlaylistObject playlist in PlaylistHandler.GetPlaylists())
+            {
+                amm += playlist.playlist_items.Count;
+            }
+
+            return amm;
+        }
         public static void IncrementSong(string song_name, PlaylistObject selected_playlist)
         {
             foreach (string key in selected_playlist.item_playcount.Keys)
@@ -53,7 +93,8 @@ namespace Media_Player.Scripts
             {
                 if (key.ToLower().Contains(song_name.ToLower()) || key == song_name)
                 {
-                    return playlist.item_playcount[key];
+                    int plays = playlist.item_playcount[key];
+                    return plays;
                 }
             }
             return 0;

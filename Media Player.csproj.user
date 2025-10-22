@@ -4,19 +4,22 @@
     <_LastSelectedProfileId>D:\Repos\Media Player\Properties\PublishProfiles\FolderProfile1.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="OptionsWindow.xaml.cs">
+    <Compile Update="Windows\OptionsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\PlaylistPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PlaylistEditPage.xaml.cs">
+    <Compile Update="Windows\PlaylistEditPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="SelectPlaylistWindow.xaml.cs">
+    <Compile Update="Windows\SelectPlaylistWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="CompactWindow.xaml.cs">
+    <Compile Update="Windows\CompactWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\StatsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

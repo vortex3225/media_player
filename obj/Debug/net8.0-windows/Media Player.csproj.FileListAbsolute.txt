@@ -31,20 +31,22 @@ D:\Repos\Media Player\obj\Debug\net8.0-windows\Media Player.csproj.AssemblyRefer
 D:\Repos\Media Player\obj\Debug\net8.0-windows\Media Pl.6759EB6C.Up2Date
 D:\Repos\Media Player\obj\Debug\net8.0-windows\Pages\PlaylistPage.g.cs
 D:\Repos\Media Player\obj\Debug\net8.0-windows\Pages\PlaylistPage.baml
-D:\Repos\Media Player\obj\Debug\net8.0-windows\PlaylistEditPage.g.cs
-D:\Repos\Media Player\obj\Debug\net8.0-windows\PlaylistEditPage.baml
-D:\Repos\Media Player\obj\Debug\net8.0-windows\SelectPlaylistWindow.g.cs
-D:\Repos\Media Player\obj\Debug\net8.0-windows\SelectPlaylistWindow.baml
 D:\Repos\Media Player\bin\Debug\net8.0-windows\app_config.json
 D:\Repos\Media Player\bin\Debug\net8.0-windows\Microsoft.Win32.SystemEvents.dll
 D:\Repos\Media Player\bin\Debug\net8.0-windows\System.Drawing.Common.dll
 D:\Repos\Media Player\bin\Debug\net8.0-windows\System.Private.Windows.Core.dll
 D:\Repos\Media Player\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
-D:\Repos\Media Player\obj\Debug\net8.0-windows\OptionsWindow.g.cs
-D:\Repos\Media Player\obj\Debug\net8.0-windows\OptionsWindow.baml
-D:\Repos\Media Player\obj\Debug\net8.0-windows\CompactWindow.g.cs
-D:\Repos\Media Player\obj\Debug\net8.0-windows\CompactWindow.baml
 D:\Repos\Media Player\bin\Debug\net8.0-windows\DiscordRPC.dll
 D:\Repos\Media Player\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 D:\Repos\Media Player\obj\Debug\net8.0-windows\Media Player.sourcelink.json
 D:\Repos\Media Player\obj\Debug\net8.0-windows\App.baml
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\CompactWindow.g.cs
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\OptionsWindow.g.cs
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\PlaylistEditPage.g.cs
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\SelectPlaylistWindow.g.cs
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\CompactWindow.baml
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\OptionsWindow.baml
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\PlaylistEditPage.baml
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\SelectPlaylistWindow.baml
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\StatsWindow.g.cs
+D:\Repos\Media Player\obj\Debug\net8.0-windows\Windows\StatsWindow.baml
