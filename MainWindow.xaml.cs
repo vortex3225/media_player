@@ -122,6 +122,11 @@ namespace Media_Player
             session_watch.Start();
         }
 
+        public CompactWindow ?GetCompactWindowInstance()
+        {
+            return compact_window;
+        }
+
         private void InitialiseMenuItemIcons()
         {
             open_file_menu_btn.Icon = new Image()

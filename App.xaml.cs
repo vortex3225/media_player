@@ -23,6 +23,7 @@ namespace Media_Player
         //    Console.WriteLine("Changed theme to" + current_theme.ToString());
         //}
         public string current_theme = "Light";
+        public string to_ret = "Light";
         public void SwitchTheme()
         {
             if (current_theme == "Light")
@@ -30,12 +31,15 @@ namespace Media_Player
             else
                 current_theme = "Light";
 
+            to_ret = (current_theme == "Light" ? "/Light/" : "/Dark/");
             Application.Current.Resources.MergedDictionaries[1].Source = new Uri($"/Themes/{current_theme}.xaml", UriKind.RelativeOrAbsolute);
 
             MainWindow mw = Application.Current.MainWindow as MainWindow;
-            string to_ret = (current_theme == "Light" ? "/Light/" : "/Dark/");
 
             mw.SwitchPlayColor(to_ret);
+            CompactWindow? compactWind = mw.GetCompactWindowInstance();
+            if (compactWind != null)
+                compactWind.SwitchPlayColor(to_ret);
         }
     }
 

@@ -26,6 +26,38 @@ namespace Media_Player
             Master = master_window;
             volume_bar.Value = Master.video_out_display.Volume * 100;
             volume_display.Text = $"Volume: {volume_bar.Value}";
+
+            App cur = App.Current as App;
+            if (cur.to_ret != "Light")
+                SwitchPlayColor(cur.to_ret);
+        }
+
+        public void SwitchPlayColor(string dir)
+        {
+            previous_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{dir}previous.png", UriKind.RelativeOrAbsolute))
+            };
+            rewind_current_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{dir}rewind.png", UriKind.RelativeOrAbsolute))
+            };
+            shuffle_btn.Content = new Image
+            {
+                Source = (!MainWindow.is_shuffled) ? new BitmapImage(new Uri($"/Sprites{dir}shuffle_untriggered.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+            };
+            pause_btn.Content = new Image
+            {
+                Source = (MainWindow.current_state == PlayerState.Paused) ? new BitmapImage(new Uri($"/Sprites{dir}pause.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}play.png", UriKind.RelativeOrAbsolute))
+            };
+            repeat_btn.Content = new Image
+            {
+                Source = (!MainWindow.is_looping) ? new BitmapImage(new Uri($"/Sprites{dir}repeat_untriggered.png", UriKind.RelativeOrAbsolute)) : new BitmapImage(new Uri($"/Sprites{dir}repeat_triggered.png", UriKind.RelativeOrAbsolute))
+            };
+            skip_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{dir}skip.png", UriKind.RelativeOrAbsolute))
+            };
         }
 
 #pragma warning disable
