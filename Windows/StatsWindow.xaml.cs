@@ -28,11 +28,11 @@ namespace Media_Player.Windows
 
         private void Display()
         {
-            total_listening_time_display.Text = $"{Math.Round(StatisticsObject.TimeListened / 60, 2)} min(s)";
+            total_listening_time_display.Text = $"{Math.Round((StatisticsObject.TimeListened + MainWindow.SendCurrentPlaytime()) / 60, 2)} min(s)";
             total_playlists_display.Text = $"{StatisticsObject.TotalPlaylists} playlists";
             total_tracks_played_display.Text = $"{StatisticsObject.TracksPlayed} tracks";
             average_session_length_display.Text = $"{Math.Round(StatisticsObject.AverageSessionTime / 60, 2)} min(s)";
-            current_session_time_display.Text = $"{Math.Round(StatisticsObject.CurrentSessionTime / 60, 2)} min(s)";
+            current_session_time_display.Text = $"{Math.Round(MainWindow.SendCurrentSessionTime() / 60, 2)} min(s)";
             highest_session_time_display.Text = $"{Math.Round(StatisticsObject.HighestSessionTime / 60, 2)} min(s)";
             most_listened_track_display.Text = System.IO.Path.GetFileNameWithoutExtension(StatisticsObject.MostListenedTrack);
             most_listened_track_plays_display.Text = StatisticsObject.MostListenedTrackPlays.ToString();

@@ -61,8 +61,8 @@ namespace Media_Player
 
         public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
-        private Stopwatch playtime_watch = new Stopwatch();
-        private Stopwatch session_watch = new Stopwatch();
+        private static Stopwatch playtime_watch = new Stopwatch();
+        private static Stopwatch session_watch = new Stopwatch();
         public MainWindow()
         {
             InitializeComponent();
@@ -120,6 +120,16 @@ namespace Media_Player
 
             StatisticsObject.Load();
             session_watch.Start();
+        }
+
+        public static double SendCurrentSessionTime()
+        {
+            return session_watch.Elapsed.TotalSeconds;
+        }
+
+        public static double SendCurrentPlaytime()
+        {
+            return playtime_watch.Elapsed.TotalSeconds;
         }
 
         public CompactWindow ?GetCompactWindowInstance()
