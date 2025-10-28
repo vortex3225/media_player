@@ -799,29 +799,25 @@ namespace Media_Player
                 }));
             }
         }
-
-        private static bool created_playlistplay = false;
         private void play_from_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (!created_playlistplay)
+            List<PlaylistObject> fetched_playlists = PlaylistHandler.LoadPlaylists();
+            if (fetched_playlists.Count <= 0)
             {
-                List<PlaylistObject> fetched_playlists = PlaylistHandler.LoadPlaylists();
-                if (fetched_playlists.Count <= 0)
+                MessageBox.Show("Please create a playlist first!", "No playlists found", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            SelectPlaylistWindow new_window = new SelectPlaylistWindow(fetched_playlists);
+            if (new_window.ShowDialog() == true)
+            {
+                PlaylistObject? selected = PlaylistHandler.selected_playlist;
+                if (selected != null)
                 {
-                    MessageBox.Show("Please create a playlist first!", "No playlists found", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                created_playlistplay = true;
-                SelectPlaylistWindow new_window = new SelectPlaylistWindow(fetched_playlists);
-                if (new_window.ShowDialog() == true)
-                {
-                    PlaylistObject? selected = PlaylistHandler.selected_playlist;
-                    if (selected != null)
-                    {
-                        LoadFiles(selected.playlist_items.ToArray());
-                        opened_playlist = selected;
-                        created_playlistplay = false;
-                    }
+                    previous_order.Clear();
+                    is_shuffled = false;
+                    shuffle_btn.Content = new Image { Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute)) };
+                    LoadFiles(selected.playlist_items.ToArray());
+                    opened_playlist = selected;
                 }
             }
         }
