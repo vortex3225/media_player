@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
         Background="{DynamicResource BackgroundBrush}"
         Title="" Height="450" Width="800">
     <Viewbox Stretch="Uniform">
@@ -15,14 +14,26 @@
             <ListView x:Name="add_song_list" Background="{DynamicResource BackgroundBrush}" Margin="572,29,10,54">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Content}" Foreground="{DynamicResource ForegroundBrush}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
             <ListView x:Name="playlist_contents" Background="{DynamicResource BackgroundBrush}" Margin="10,29,256,10" Width="auto" Height="auto">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Content}" Foreground="{DynamicResource ForegroundBrush}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
