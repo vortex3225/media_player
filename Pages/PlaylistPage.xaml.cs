@@ -86,11 +86,6 @@ namespace Media_Player.Objects
 
         private void edit_selected_playlist_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (opened_edit)
-            {
-                MessageBox.Show("Please close the previous edit window before attempting to edit a playlist again!", "Edit Window Already Open", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
             ListViewItem? selected_item = current_playlists.SelectedItem as ListViewItem;
             if (selected_item != null)
             {
@@ -98,20 +93,13 @@ namespace Media_Player.Objects
                 if (selected_name != null && MessageBox.Show($"Are you sure you wish to edit {selected_name}?", $"Editing {selected_name}", MessageBoxButton.YesNoCancel, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
                     PlaylistEditPage edit_page = new PlaylistEditPage(selected_name, opened_files_list.Items, this);
-                    edit_page.Show();
-                    opened_edit = true;
-                    edit_page.Closed += Edit_page_Closed;
+                    edit_page.ShowDialog();
                 }
             }
             else
             {
                 MessageBox.Show("Please select a playlist first!");
             }
-        }
-
-        private void Edit_page_Closed(object? sender, EventArgs e)
-        {
-            opened_edit = false;
         }
 
         private void remove_selected_playlist_btn_Click(object sender, RoutedEventArgs e)

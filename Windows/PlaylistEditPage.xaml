@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
         Background="{DynamicResource BackgroundBrush}"
         Title="" Height="450" Width="800">
     <Viewbox Stretch="Uniform">
