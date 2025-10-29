@@ -14,6 +14,9 @@
                 <MenuItem x:Name="open_file_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open File" Click="open_file_menu_btn_Click"/>
                 <MenuItem x:Name="open_folder_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open Folder" Click="open_folder_menu_btn_Click"/>
                 <MenuItem x:Name="clear_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Clear opened files" Click="clear_menu_btn_Click"/>
+                <Separator Background="{DynamicResource BackgroundBrush}"/>
+                <MenuItem x:Name="export_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export playlist(s)" Click="export_playlist_menu_btn_Click"/>
+                <MenuItem x:Name="export_statistics_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export statistics" Click="export_statistics_menu_btn_Click"/>
             </MenuItem>
             <MenuItem x:Name="options_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Options">
                 <MenuItem x:Name="change_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Change Options" Click="options_menu_btn_Click"/>

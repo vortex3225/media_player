@@ -1072,5 +1072,16 @@ namespace Media_Player
                 };
             }
         }
+
+        private void export_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ExportWindow ew = new ExportWindow();
+            ew.ShowDialog();
+        }
+
+        private void export_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
