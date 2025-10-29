@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -39,26 +41,40 @@ namespace Media_Player.Scripts
             return File.Open(file_path, FileMode.CreateNew);
         }
 
-        private static async void WriteHeader(StreamWriter streamWriter)
+        private static async Task WriteHeader(StreamWriter streamWriter)
         {
-            await streamWriter.WriteLineAsync($"[EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}");
-            await streamWriter.WriteLineAsync();
-            await streamWriter.WriteLineAsync();
+            try
+            {
+                await streamWriter.WriteLineAsync($"[EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}]");
+                await streamWriter.WriteLineAsync();
+                await streamWriter.WriteLineAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not write header --> {ex.StackTrace} --- {ex.Message}");
+            }
         }
 
-        private static async void WriteFileContents(PlaylistObject playlist, StreamWriter writer, bool save_play_counts)
+        private static async Task WriteFileContents(PlaylistObject playlist, StreamWriter writer, bool save_play_counts)
         {
-            await writer.WriteLineAsync($"[{playlist.name}]");
-            await writer.WriteLineAsync();
-            await writer.WriteLineAsync();
-
-            foreach (KeyValuePair<string, int> counts in playlist.item_playcount)
+            try
             {
-                string to_write = $"{counts.Key} | ";
-                if (save_play_counts) to_write += counts.Value.ToString();
-                else to_write += "0";
+                await writer.WriteLineAsync($"[{playlist.name}]");
+                await writer.WriteLineAsync();
+                await writer.WriteLineAsync();
 
-                await writer.WriteLineAsync(to_write);
+                foreach (KeyValuePair<string, int> counts in playlist.item_playcount)
+                {
+                    string to_write = $"{counts.Key} | ";
+                    if (save_play_counts) to_write += counts.Value.ToString();
+                    else to_write += "0";
+
+                    await writer.WriteLineAsync(to_write);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not write file contents --> {ex.StackTrace} --- {ex.Message}");
             }
         }
 
@@ -66,15 +82,16 @@ namespace Media_Player.Scripts
         {
             try
             {
+                if (exportParams.export_list.Count == 0) throw new Exception("Cannot export empty list");
 
                 if (exportParams.single_file)
                 {
                     using (var file_stream = MakeFile(exportParams.export_path))
                     using (var writer = new StreamWriter(file_stream))
                     {
-                        WriteHeader(writer);
+                        await WriteHeader(writer);
                         foreach (PlaylistObject playlist in exportParams.export_list)
-                            WriteFileContents(playlist, writer, exportParams.save_play_counts);
+                           await WriteFileContents(playlist, writer, exportParams.save_play_counts);
                     }
                 }
                 else
@@ -84,22 +101,113 @@ namespace Media_Player.Scripts
                         using (var file_stream = MakeFile(exportParams.export_path))
                         using (var writer = new StreamWriter(file_stream))
                         {
-                            WriteHeader(writer);
-                            WriteFileContents(playlist, writer, exportParams.save_play_counts);
+                           await WriteHeader(writer);
+                           await WriteFileContents(playlist, writer, exportParams.save_play_counts);
                         }
                     }
 
                 }
 
+                MessageBox.Show($"Successfully exported: {exportParams.export_list.Count} playlists to {exportParams.export_path}", $"Export successfully", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Could not export --> {ex.StackTrace}");
+                MessageBox.Show($"Could not export --> {ex.StackTrace} --- {ex.Message}");
                 return false;
             }
         }
 
-        
+        public static async Task<bool> Import(string[] file_paths)
+        {
+            try
+            {
+                Dictionary<string, string> renamed = new Dictionary<string, string>();
+                List<PlaylistObject> playlists_ToSave = new List<PlaylistObject>();
+
+                foreach (string file_path in file_paths)
+                {
+                    if (!File.Exists(file_path)) throw new FileNotFoundException($"Could not find the specified file to import --> {file_path}");
+
+                    using (var fileStream = File.OpenRead(file_path))
+                    using (var reader = new StreamReader(fileStream))
+                    {
+                        string current_playlist_name = string.Empty;
+                        List<string> items = new List<string>();
+                        Dictionary<string, int> plays = new Dictionary<string, int>();
+
+                        string? line = await reader.ReadLineAsync();
+                        while (true)
+                        {
+
+                            if (reader.EndOfStream)
+                            {
+                                if (items.Count > 0 && !string.IsNullOrEmpty(current_playlist_name) && plays.Count > 0)
+                                    playlists_ToSave.Add(new PlaylistObject(current_playlist_name, items, plays));
+                                
+                                break;
+                            }
+
+                            if (string.IsNullOrEmpty(line) || line.Contains("[EXPORT"))
+                            {
+                                line = await reader.ReadLineAsync();
+                                continue;
+                            }
+
+                            if (line.StartsWith("[") && line.EndsWith("]"))
+                            {
+                                if (!string.IsNullOrEmpty(current_playlist_name))
+                                {                                    
+                                    playlists_ToSave.Add(new PlaylistObject(current_playlist_name, new List<string>(items), new Dictionary<string, int>(plays)));
+                                    items.Clear();
+                                    plays.Clear();
+                                }
+
+                                current_playlist_name = line.Substring(1, line.Length - 2);
+                            } 
+                            else if (!string.IsNullOrEmpty(line))
+                            {
+                                string[] split = line.Split(" | ");
+                                if (split.Length == 2)
+                                {
+                                    items.Add(split[0]);
+                                    plays.TryAdd(split[0], int.Parse(split[1]));
+                                }
+                            }
+                            line = await reader.ReadLineAsync();
+                        }
+                    }
+                }
+
+                foreach (PlaylistObject playlist in playlists_ToSave)
+                {
+                    int tries = 0;
+                    string original = playlist.name;
+                    while (PlaylistHandler.NameAlreadyExists(playlist.name))
+                    {
+                        tries++;
+                        playlist.name = $"{original}_{tries}";
+                    }
+                    if (original != playlist.name) renamed.Add(original, playlist.name);
+
+                    PlaylistHandler.SavePlaylist(playlist);
+                    // Console.WriteLine($"saved {playlist.name} | {playlist.playlist_items.Count} | {playlist.item_playcount.Count}");
+                }
+
+                string f = string.Empty;
+                foreach (KeyValuePair<string, string> kvp in renamed)
+                {
+                    f += $"RENAMED {kvp.Key} TO {kvp.Value}\n";
+                }
+                if (!string.IsNullOrEmpty(f)) MessageBox.Show(f, "Solved naming conflicts...", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong while attempting to import file --> {ex.StackTrace} --- {ex.Message}");
+                return false;
+            }
+        }
     }
 }

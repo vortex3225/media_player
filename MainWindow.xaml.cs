@@ -1073,13 +1073,35 @@ namespace Media_Player
             }
         }
 
-        private void export_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
+        private async void export_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (PlaylistHandler.GetPlaylists().Count == 0)
+            {
+                MessageBox.Show("No playlists to export!", "Error: no playlists found!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             ExportWindow ew = new ExportWindow();
             ew.ShowDialog();
         }
+        private async void export_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
-        private void export_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        private async void import_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select files to import";
+            ofd.Multiselect = true;
+            ofd.Filter = $"Media Player Playlist File|*.mp|Media Player Statistics File|*.mps";
+
+            if (ofd.ShowDialog() == true)
+                await Externals.Import(ofd.FileNames);
+
+        }
+
+        private void import_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
         {
 
         }

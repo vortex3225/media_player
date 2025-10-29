@@ -56,7 +56,7 @@ namespace Media_Player.Windows
             export_as_single_file_check.IsEnabled = exportParams.export_list.Count > 1;
             export_btn.IsEnabled = exportParams.export_list.Count > 0 && !string.IsNullOrEmpty(exportParams.export_path);
 
-            if (string.IsNullOrEmpty(exportParams.export_path)) export_path_display.Text = $"Export path: {exportParams.export_path}";
+            if (!string.IsNullOrEmpty(exportParams.export_path)) export_path_display.Text = $"Export path: {exportParams.export_path}";
             else export_path_display.Text = $"Export path: none";
         }
 
@@ -99,17 +99,17 @@ namespace Media_Player.Windows
 
         private void export_as_single_file_check_Click(object sender, RoutedEventArgs e)
         {
-
+            exportParams.single_file = export_as_single_file_check.IsChecked == true;
         }
 
         private void save_playlist_item_playcounts_check_Click(object sender, RoutedEventArgs e)
         {
-
+            exportParams.save_play_counts = save_playlist_item_playcounts_check.IsChecked == true;
         }
 
-        private void export_btn_Click(object sender, RoutedEventArgs e)
+        private async void export_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            await Export(exportParams);
         }
     }
 }

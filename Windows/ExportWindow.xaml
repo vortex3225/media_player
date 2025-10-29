@@ -21,7 +21,7 @@
         <StackPanel Orientation="Vertical" Margin="255,105,13,76">
             <TextBlock x:Name="export_path_display" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="10" FontWeight="Bold" TextWrapping="WrapWithOverflow" Height="32">Export path: none</TextBlock>
             <Button x:Name="select_export_path_btn" FontFamily="Arial" FontSize="10" Content="Choose an export path" Background="#4287f5" BorderBrush="{DynamicResource ForegroundBrush}" Click="select_export_path_btn_Click"/>
-            <TextBlock x:Name="total_playlist_items_display" FontFamily="Arial" FontSize="10" FontWeight="Bold" TextWrapping="WrapWithOverflow" Margin="0, 20, 0, 5" Text="Total playlist items: 0"/>
+            <TextBlock x:Name="total_playlist_items_display" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="10" FontWeight="Bold" TextWrapping="WrapWithOverflow" Margin="0, 20, 0, 5" Text="Total playlist items: 0"/>
             <CheckBox x:Name="export_as_single_file_check" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="14" Content="Export as a single file" IsChecked="False" Click="export_as_single_file_check_Click" IsEnabled="False"/>
             <CheckBox x:Name="save_playlist_item_playcounts_check" Foreground="{DynamicResource ForegroundBrush}" FontFamily="Arial" FontSize="12" Content="Keep playlist items play counts" IsChecked="True" Click="save_playlist_item_playcounts_check_Click" IsEnabled="False"/>
             <Button x:Name="export_btn" FontFamily="Arial" FontSize="14" Content="Export" Margin="0, 20, 0, 0" Background="LimeGreen" Click="export_btn_Click" IsEnabled="False"/>
