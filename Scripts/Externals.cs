@@ -118,6 +118,107 @@ namespace Media_Player.Scripts
             }
         }
 
+        public static async Task<bool> ExportStatistics(string export_path)
+        {
+            try
+            {
+                string name = $"mp_statistics";
+                string file_path = Path.Combine(export_path, $"{name}{STATISTICS_EXPORT_FILE_EXTENSION}");
+
+                int tries = 0;
+                while (File.Exists(file_path))
+                {
+                    tries++;
+                    file_path = Path.Combine(export_path, $"{name}_{tries}{STATISTICS_EXPORT_FILE_EXTENSION}");
+                }
+
+                string export_contents = 
+                   $"""
+                   [EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}]
+
+                   install_date= {StatisticsObject.InstallationDate}
+                   time_listened= {StatisticsObject.TimeListened}
+                   highest_s_time= {StatisticsObject.HighestSessionTime}
+                   average_s_time= {StatisticsObject.AverageSessionTime}
+                   sessions= {StatisticsObject.Sessions}
+                   tracks_played= {StatisticsObject.TracksPlayed}
+                   most_listened_track= {StatisticsObject.MostListenedTrack}
+                   most_listened_t_plays= {StatisticsObject.MostListenedTrackPlays}
+                   total_playlists= {StatisticsObject.TotalPlaylists}
+                   total_tracks_playlists= {StatisticsObject.TotalTracksInPlaylists}
+                   """;
+
+                await File.WriteAllTextAsync(file_path, export_contents);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not export statistics --> {ex.StackTrace} --- {ex.Message}");
+                return false;
+            }
+        }
+
+        public static async Task<bool> ImportStatistics(string file_path)
+        {
+            try
+            {
+                if (!File.Exists(file_path)) throw new FileNotFoundException($"Could not find statistics file to import --> {file_path}");
+
+                using (var fileStream = File.OpenRead(file_path))
+                using (var reader = new StreamReader(fileStream))
+                {
+                    string? line = await reader.ReadLineAsync();
+                    while (!reader.EndOfStream)
+                    {
+                        if (string.IsNullOrEmpty(line) || line.Contains("[EXPORT HEADER"))
+                        {
+                            line = await reader.ReadLineAsync();
+                            continue;
+                        }
+
+                        string[] split = line.Split("=");
+
+                        if (split.Length == 2)
+                        {
+                            split[0] = split[0].Trim();
+                            split[1] = split[0].Trim();
+
+                            switch (split[0])
+                            {
+                                case "install_date":
+                                    break;
+                                case "time_listened":
+                                    break;
+                                case "highest_s_time":
+                                    break;
+                                case "average_s_time":
+                                    break;
+                                case "sessions":
+                                    break;
+                                case "tracks_played":
+                                    break;
+                                case "most_listened_track":
+                                    break;
+                                case "most_listened_t_plays":
+                                    break;
+                                case "total_playlists":
+                                    break;
+                                case "total_tracks_playlists":
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not import statistics --> {ex.StackTrace} --- {ex.Message}");
+                return false;
+            }
+        }
+
         public static async Task<bool> Import(string[] file_paths)
         {
             try
