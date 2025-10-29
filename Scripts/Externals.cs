@@ -1,4 +1,5 @@
 ﻿using Media_Player.Objects;
+using Media_Player.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -136,7 +137,7 @@ namespace Media_Player.Scripts
                    $"""
                    [EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}]
 
-                   install_date= {StatisticsObject.InstallationDate}
+                   install_date= {((DateTimeOffset)StatisticsObject.InstallationDate).ToUnixTimeSeconds()}
                    time_listened= {StatisticsObject.TimeListened}
                    highest_s_time= {StatisticsObject.HighestSessionTime}
                    average_s_time= {StatisticsObject.AverageSessionTime}
@@ -181,33 +182,48 @@ namespace Media_Player.Scripts
                         if (split.Length == 2)
                         {
                             split[0] = split[0].Trim();
-                            split[1] = split[0].Trim();
+                            split[1] = split[1].Trim();
 
                             switch (split[0])
                             {
                                 case "install_date":
+                                    // MessageBox.Show(split[0]);
+                                    StatisticsObject.InstallationDate = DateTimeOffset.FromUnixTimeSeconds(Int64.Parse(split[1])).LocalDateTime;
                                     break;
                                 case "time_listened":
+                                    StatisticsObject.TimeListened = double.Parse(split[1]);
                                     break;
                                 case "highest_s_time":
+                                    StatisticsObject.HighestSessionTime = double.Parse(split[1]);
                                     break;
                                 case "average_s_time":
+                                    StatisticsObject.AverageSessionTime = double.Parse(split[1]);
                                     break;
                                 case "sessions":
+                                    StatisticsObject.Sessions = int.Parse(split[1]);
                                     break;
                                 case "tracks_played":
+                                    StatisticsObject.TracksPlayed = int.Parse(split[1]);
                                     break;
                                 case "most_listened_track":
+                                    StatisticsObject.MostListenedTrack = split[1];
                                     break;
                                 case "most_listened_t_plays":
+                                    StatisticsObject.MostListenedTrackPlays = int.Parse(split[1]);
                                     break;
                                 case "total_playlists":
+                                    StatisticsObject.TotalPlaylists = int.Parse(split[1]);
                                     break;
                                 case "total_tracks_playlists":
+                                    StatisticsObject.TotalTracksInPlaylists = int.Parse(split[1]);
                                     break;
                             }
                         }
+
+                        line = await reader.ReadLineAsync();
                     }
+
+                    StatisticsObject.Save();
                 }
 
                 return true;

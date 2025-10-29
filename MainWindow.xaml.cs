@@ -1086,7 +1086,11 @@ namespace Media_Player
         }
         private async void export_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            OpenFolderDialog ofd = new OpenFolderDialog();
+            ofd.Title = "Select place to export statistics file";
+            ofd.Multiselect = false;
+            if (ofd.ShowDialog() == true)
+                await Externals.ExportStatistics(ofd.FolderName);
         }
 
         private async void import_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
@@ -1094,15 +1098,22 @@ namespace Media_Player
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select files to import";
             ofd.Multiselect = true;
-            ofd.Filter = $"Media Player Playlist File|*.mp|Media Player Statistics File|*.mps";
+            ofd.Filter = $"Media Player Playlist File|*{Externals.PLAYLIST_EXPORT_FILE_EXTENSION}";
 
             if (ofd.ShowDialog() == true)
                 await Externals.Import(ofd.FileNames);
 
         }
 
-        private void import_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        private async void import_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select files to import";
+            ofd.Multiselect = false;
+            ofd.Filter = $"Media Player Statistics File|*{Externals.STATISTICS_EXPORT_FILE_EXTENSION}";
+
+            if (ofd.ShowDialog() == true)
+                await Externals.ImportStatistics(ofd.FileName);
 
         }
     }
