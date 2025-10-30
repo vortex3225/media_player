@@ -1,7 +1,7 @@
 ﻿Media Player
 1.0.0.0
 
-exe
+winexe
 C#
 .cs
 D:\Repos\Media Player\obj\Debug\net8.0-windows\
@@ -16,5 +16,5 @@ D:\Repos\Media Player\App.xaml
 2041053573389
 MainWindow.xaml;Pages\PlaylistPage.xaml;Windows\CompactWindow.xaml;Windows\ExportWindow.xaml;Windows\OptionsWindow.xaml;Windows\PlaylistEditPage.xaml;Windows\SelectPlaylistWindow.xaml;Windows\StatsWindow.xaml;
 
-False
+True
 
