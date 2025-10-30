@@ -47,7 +47,7 @@
                 </StackPanel>
                 <StackPanel x:Name="lifespan_panel" Orientation="Horizontal" Margin="0, 5, 0, 0" Visibility="Collapsed">
                     <TextBlock FontFamily="Arial" FontSize="11" Text="Delete backups older than: " Foreground="{DynamicResource ForegroundBrush}"/>
-                    <TextBox x:Name="backup_lifespan_box" Text="7" Margin="90, 0, 0, 0" FontFamily="Arial" FontSize="10" BorderBrush="{DynamicResource ForegroundBrush}" TextAlignment="Center" Foreground="{DynamicResource ForegroundBrush}" Width="26"/>
+                    <TextBox x:Name="backup_lifespan_box" Text="7" Margin="90, 0, 0, 0" FontFamily="Arial" FontSize="10" Background="{DynamicResource BackgroundBrush}" BorderBrush="{DynamicResource ForegroundBrush}" TextAlignment="Center" Foreground="{DynamicResource ForegroundBrush}" Width="26"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
