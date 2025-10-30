@@ -1210,5 +1210,10 @@ namespace Media_Player
                 if (!result) MessageBox.Show($"Failed to import backup, cancelled.", "Backup import failed!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void video_out_display_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            MessageBox.Show($"Media failed because of: {e.ErrorException}");
+        }
     }
 }
