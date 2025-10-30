@@ -121,7 +121,7 @@ namespace Media_Player.Scripts
                         if (created_at == null) throw new Exception("ParseDateTime function returned null.");
                         TimeSpan elapsed = (TimeSpan)(DateTime.Now - created_at);
 
-                        if (elapsed.TotalSeconds >= lifespan) File.Delete(file_p);
+                        if (elapsed.TotalDays >= lifespan) File.Delete(file_p);
                     }
                 }
                 return true;
