@@ -147,7 +147,7 @@ namespace Media_Player.Scripts
                 Dictionary<string, int> plays = new Dictionary<string, int>();
 
 
-                string[] backup_file_lines = File.ReadAllLines(backup_file);
+                string[] backup_file_lines = await File.ReadAllLinesAsync(backup_file);
 
                 int playlist_start = -1, statistics_start = -1;
                 
