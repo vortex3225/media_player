@@ -3,6 +3,7 @@ using Media_Player.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
@@ -19,6 +20,13 @@ namespace Media_Player.Scripts
 
         public const string PLAYLIST_EXPORT_FILE_EXTENSION = ".mp";
         public const string STATISTICS_EXPORT_FILE_EXTENSION = ".mps";
+        public const string BACKUP_FILE_EXTENSION = ".mbk";
+
+        public enum BackupType
+        {
+            Statistics,
+            Playlist
+        }
 
         public struct ExportParams(string p1, bool p2, bool save_count_param, List<PlaylistObject> p3 )
         {
@@ -42,6 +50,56 @@ namespace Media_Player.Scripts
             return File.Open(file_path, FileMode.CreateNew);
         }
 
+        public static async Task<bool> Backup(BackupType b_type)
+        {
+            try
+            {
+                string backupDir = Path.Combine(AppContext.BaseDirectory, "Backups");
+
+                if (!Directory.Exists(backupDir))
+                    Directory.CreateDirectory(backupDir);
+
+                string backupFile = Path.Combine(backupDir, $"backup{BACKUP_FILE_EXTENSION}");
+
+                int tries = 0;
+                while (File.Exists(backupFile))
+                {
+                    tries++;
+                    backupFile = Path.Combine(backupDir, $"backup_{tries}{BACKUP_FILE_EXTENSION}");
+                }
+
+                List<PlaylistObject> playlists = PlaylistHandler.GetPlaylists();
+
+                using (var fileStream = File.OpenWrite(backupFile))
+                using (var writer =  new StreamWriter(fileStream))
+                {
+                    await WriteHeader(writer);
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync("[ - PLAYLISTS - ]");
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync();
+
+                    foreach (PlaylistObject playlist in playlists)
+                        await WriteFileContents(playlist, writer, true);
+                    
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync("[ - STATISTICS - ]");
+                    await writer.WriteLineAsync();
+                    await writer.WriteLineAsync();
+                }
+                await WriteStatisticsContents(backupFile, true);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not create backup --> {ex.StackTrace} --- {ex.Message}");
+                return false;
+            }
+        }
+
         private static async Task WriteHeader(StreamWriter streamWriter)
         {
             try
@@ -60,6 +118,8 @@ namespace Media_Player.Scripts
         {
             try
             {
+                await writer.WriteLineAsync();
+                await writer.WriteLineAsync();
                 await writer.WriteLineAsync($"[{playlist.name}]");
                 await writer.WriteLineAsync();
                 await writer.WriteLineAsync();
@@ -119,37 +179,48 @@ namespace Media_Player.Scripts
             }
         }
 
-        public static async Task<bool> ExportStatistics(string export_path)
+        private static async Task WriteStatisticsContents(string file_path, bool append = false)
+        {
+            string export_contents =
+            $"""
+             [EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}]
+
+             install_date= {((DateTimeOffset)StatisticsObject.InstallationDate).ToUnixTimeSeconds()}
+             time_listened= {StatisticsObject.TimeListened}
+             highest_s_time= {StatisticsObject.HighestSessionTime}
+             average_s_time= {StatisticsObject.AverageSessionTime}
+             sessions= {StatisticsObject.Sessions}
+             tracks_played= {StatisticsObject.TracksPlayed}
+             most_listened_track= {StatisticsObject.MostListenedTrack}
+             most_listened_t_plays= {StatisticsObject.MostListenedTrackPlays}
+             total_playlists= {StatisticsObject.TotalPlaylists}
+             total_tracks_playlists= {StatisticsObject.TotalTracksInPlaylists}
+            """;
+
+            if (!append) await File.WriteAllTextAsync(file_path, export_contents);
+            else await File.AppendAllTextAsync(file_path, export_contents);
+        }
+
+        public static async Task<bool> ExportStatistics(string export_path, string? custom_Path = null)
         {
             try
             {
                 string name = $"mp_statistics";
                 string file_path = Path.Combine(export_path, $"{name}{STATISTICS_EXPORT_FILE_EXTENSION}");
 
-                int tries = 0;
-                while (File.Exists(file_path))
+                if (!string.IsNullOrEmpty(custom_Path)) file_path = custom_Path;
+                else
                 {
-                    tries++;
-                    file_path = Path.Combine(export_path, $"{name}_{tries}{STATISTICS_EXPORT_FILE_EXTENSION}");
+                    int tries = 0;
+                    while (File.Exists(file_path))
+                    {
+                        tries++;
+                        file_path = Path.Combine(export_path, $"{name}_{tries}{STATISTICS_EXPORT_FILE_EXTENSION}");
+                    }
                 }
 
-                string export_contents = 
-                   $"""
-                   [EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy @ HH:mm")}]
+                await WriteStatisticsContents(file_path);
 
-                   install_date= {((DateTimeOffset)StatisticsObject.InstallationDate).ToUnixTimeSeconds()}
-                   time_listened= {StatisticsObject.TimeListened}
-                   highest_s_time= {StatisticsObject.HighestSessionTime}
-                   average_s_time= {StatisticsObject.AverageSessionTime}
-                   sessions= {StatisticsObject.Sessions}
-                   tracks_played= {StatisticsObject.TracksPlayed}
-                   most_listened_track= {StatisticsObject.MostListenedTrack}
-                   most_listened_t_plays= {StatisticsObject.MostListenedTrackPlays}
-                   total_playlists= {StatisticsObject.TotalPlaylists}
-                   total_tracks_playlists= {StatisticsObject.TotalTracksInPlaylists}
-                   """;
-
-                await File.WriteAllTextAsync(file_path, export_contents);
                 return true;
             }
             catch (Exception ex)

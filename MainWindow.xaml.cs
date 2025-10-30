@@ -1101,8 +1101,19 @@ namespace Media_Player
             ofd.Filter = $"Media Player Playlist File|*{Externals.PLAYLIST_EXPORT_FILE_EXTENSION}";
 
             if (ofd.ShowDialog() == true)
+            {
+                if (fetched_settings.make_backups)
+                {
+                    bool backupResult = await Externals.Backup(Externals.BackupType.Playlist);
+                    if (!backupResult)
+                    {
+                        MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                
                 await Externals.Import(ofd.FileNames);
-
+            }
         }
 
         private async void import_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
@@ -1113,8 +1124,19 @@ namespace Media_Player
             ofd.Filter = $"Media Player Statistics File|*{Externals.STATISTICS_EXPORT_FILE_EXTENSION}";
 
             if (ofd.ShowDialog() == true)
+            {
+                if (fetched_settings.make_backups)
+                {
+                    bool backupResult = await Externals.Backup(Externals.BackupType.Statistics);
+                    if (!backupResult)
+                    {
+                        MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                
                 await Externals.ImportStatistics(ofd.FileName);
-
+            }
         }
     }
 }

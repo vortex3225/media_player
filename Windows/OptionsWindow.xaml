@@ -37,6 +37,18 @@
                     <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Dark mode:" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 171, 0"/>
                     <CheckBox Foreground="{DynamicResource ForegroundBrush}" x:Name="dark_mode_check" IsChecked="False" Click="dark_mode_check_Click"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Automatically create backups when importing" FontSize="11" FontFamily="Arial" TextAlignment="Center" Margin="0, 0, 7.5, 0"/>
+                    <CheckBox x:Name="auto_create_backups_check" IsChecked="True" Click="auto_create_backups_check_Click" FontFamily="Arial" FontSize="11"  Foreground="{DynamicResource ForegroundBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Text="Automatically remove old backups" FontSize="11" FontFamily="Arial" TextAlignment="Center"/>
+                    <CheckBox x:Name="auto_remove_backups" IsChecked="False" Click="auto_remove_backups_Click" FontFamily="Arial" FontSize="11" Margin="61, 0, 0, 0"/>
+                </StackPanel>
+                <StackPanel x:Name="lifespan_panel" Orientation="Horizontal" Margin="0, 5, 0, 0" Visibility="Collapsed">
+                    <TextBlock FontFamily="Arial" FontSize="11" Text="Delete backups older than: " Foreground="{DynamicResource ForegroundBrush}"/>
+                    <TextBox x:Name="backup_lifespan_box" Text="7" Margin="90, 0, 0, 0" FontFamily="Arial" FontSize="10" BorderBrush="{DynamicResource ForegroundBrush}" TextAlignment="Center" Foreground="{DynamicResource ForegroundBrush}" Width="26"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Viewbox>

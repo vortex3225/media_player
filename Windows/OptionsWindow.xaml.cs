@@ -144,5 +144,16 @@ namespace Media_Player
                 app.SwitchTheme();
             }
         }
+
+        private void auto_create_backups_check_Click(object sender, RoutedEventArgs e)
+        {
+            settings.make_backups = auto_create_backups_check.IsChecked == true;
+        }
+
+        private void auto_remove_backups_Click(object sender, RoutedEventArgs e)
+        {
+            settings.delete_old_backups = auto_remove_backups.IsChecked == true;
+            lifespan_panel.Visibility = (auto_remove_backups.IsChecked == true ? Visibility.Visible : Visibility.Hidden);
+        }
     }
 }
