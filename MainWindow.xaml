@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
         Icon="/Sprites/media_player.ico"
+        Loaded="Window_Loaded"
         Background="{DynamicResource BackgroundBrush}"
         Title="Media Player" Height="550" Width="950">
     <DockPanel LastChildFill="False">
@@ -14,6 +15,14 @@
                 <MenuItem x:Name="open_file_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open File" Click="open_file_menu_btn_Click"/>
                 <MenuItem x:Name="open_folder_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open Folder" Click="open_folder_menu_btn_Click"/>
                 <MenuItem x:Name="clear_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Clear opened files" Click="clear_menu_btn_Click"/>
+                <Separator/>
+                <MenuItem x:Name="export_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export playlist(s)" Click="export_playlist_menu_btn_Click"/>
+                <MenuItem x:Name="export_statistics_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export statistics" Click="export_statistics_menu_btn_Click"/>
+                <MenuItem x:Name="import_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import playlist(s)" Click="import_playlist_menu_btn_Click"/>
+                <MenuItem x:Name="import_statistics_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import statistics" Click="import_statistics_menu_btn_Click"/>
+                <Separator/>
+                <MenuItem x:Name="make_backup_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Create a backup" Click="make_backup_menu_btn_Click"/>
+                <MenuItem x:Name="import_backup_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import a backup" Click="import_backup_menu_btn_Click"/>
             </MenuItem>
             <MenuItem x:Name="options_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Options">
                 <MenuItem x:Name="change_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Change Options" Click="options_menu_btn_Click"/>

@@ -1,7 +1,7 @@
 ﻿Media Player
 
 
-winexe
+exe
 C#
 .cs
 D:\Repos\Media Player\obj\Debug\net8.0-windows\
@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\Repos\Media Player\App.xaml
-71289444711
+81657972516
 21349535418
-18-1455444315
-204415464382
-MainWindow.xaml;Pages\PlaylistPage.xaml;Windows\CompactWindow.xaml;Windows\OptionsWindow.xaml;Windows\PlaylistEditPage.xaml;Windows\SelectPlaylistWindow.xaml;Windows\StatsWindow.xaml;
+20843565228
+2041053573389
+MainWindow.xaml;Pages\PlaylistPage.xaml;Windows\CompactWindow.xaml;Windows\ExportWindow.xaml;Windows\OptionsWindow.xaml;Windows\PlaylistEditPage.xaml;Windows\SelectPlaylistWindow.xaml;Windows\StatsWindow.xaml;
 
 False
 

@@ -1,6 +1,9 @@
 {
   "resume_on_enter": false,
-  "save_files":  false,
+  "save_files": false,
   "drp": true,
-  "theme": "light"
+  "theme": "light",
+  "delete_old_backups": false,
+  "make_backups": true,
+  "backup_lifespan": 7
 }

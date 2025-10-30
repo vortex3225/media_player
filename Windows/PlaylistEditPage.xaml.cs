@@ -75,6 +75,7 @@ namespace Media_Player
                     item.Name = $"Box{index}";
                     item.IsChecked = true;
                     item.Click += Item_Checked;
+                    item.Foreground = (Brush)Application.Current.Resources["ForegroundBrush"];
                     playlist_contents.Items.Add(item);
                     index++;
                 }
@@ -89,6 +90,7 @@ namespace Media_Player
                     n_item.Content = item.Content;
                     n_item.IsChecked = true;
                     n_item.IsEnabled = false;
+                    n_item.Foreground = (Brush)Application.Current.Resources["ForegroundBrush"];
                     add_song_list.Items.Add(n_item);
                 }
 

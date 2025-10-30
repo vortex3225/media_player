@@ -4,6 +4,9 @@
     <_LastSelectedProfileId>D:\Repos\Media Player\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="Windows\ExportWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\OptionsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

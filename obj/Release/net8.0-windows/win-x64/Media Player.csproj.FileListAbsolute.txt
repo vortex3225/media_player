@@ -35,8 +35,6 @@ D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\ref\Media Player.dll
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\DiscordRPC.dll
 D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Newtonsoft.Json.dll
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Media Player.sourcelink.json
-D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Sprites\Dark\media_player.ico
-D:\Repos\Media Player\bin\Release\net8.0-windows\win-x64\Sprites\Light\media_player.ico
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\CompactWindow.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\OptionsWindow.g.cs
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\PlaylistEditPage.g.cs
@@ -48,3 +46,5 @@ D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\OptionsWindow.b
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\PlaylistEditPage.baml
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\SelectPlaylistWindow.baml
 D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\StatsWindow.baml
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\ExportWindow.g.cs
+D:\Repos\Media Player\obj\Release\net8.0-windows\win-x64\Windows\ExportWindow.baml

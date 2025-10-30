@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 
 namespace Media_Player
@@ -61,8 +62,8 @@ namespace Media_Player
 
         public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
-        private Stopwatch playtime_watch = new Stopwatch();
-        private Stopwatch session_watch = new Stopwatch();
+        private static Stopwatch playtime_watch = new Stopwatch();
+        public static Stopwatch session_watch = new Stopwatch();
         public MainWindow()
         {
             InitializeComponent();
@@ -122,6 +123,14 @@ namespace Media_Player
             session_watch.Start();
         }
 
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (fetched_settings.delete_old_backups == true)
+            {
+                await Externals.ClearOldBackups(fetched_settings.backup_lifespan);
+            }
+        }
+
         private void InitialiseMenuItemIcons()
         {
             open_file_menu_btn.Icon = new Image()
@@ -155,6 +164,38 @@ namespace Media_Player
             change_menu_btn.Icon = new Image()
             {
                 Source = new BitmapImage(new Uri($"/Sprites/pencil.png", UriKind.RelativeOrAbsolute))
+            };
+            export_playlist_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/export.png", UriKind.RelativeOrAbsolute))
+            };
+            import_playlist_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import.png", UriKind.RelativeOrAbsolute))
+            };
+            export_statistics_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/export_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            import_statistics_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            make_backup_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/create_backup.png", UriKind.RelativeOrAbsolute))
+            };
+            import_backup_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import_backup.png", UriKind.RelativeOrAbsolute))
+            };
+            view_stats_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/view_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            clear_stats_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/clear_stats.png", UriKind.RelativeOrAbsolute))
             };
         }
         public void UpdateVideoPositionBar()
@@ -785,28 +826,26 @@ namespace Media_Player
             }
         }
 
-        private static bool created_playlistplay = false;
         private void play_from_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (!created_playlistplay)
+            List<PlaylistObject> fetched_playlists = PlaylistHandler.LoadPlaylists();
+            if (fetched_playlists.Count <= 0)
             {
-                List<PlaylistObject> fetched_playlists = PlaylistHandler.LoadPlaylists();
-                if (fetched_playlists.Count <= 0)
+                MessageBox.Show("Please create a playlist first!", "No playlists found", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            SelectPlaylistWindow new_window = new SelectPlaylistWindow(fetched_playlists);
+            if (new_window.ShowDialog() == true)
+            {
+                PlaylistObject? selected = PlaylistHandler.selected_playlist;
+                if (selected != null)
                 {
-                    MessageBox.Show("Please create a playlist first!", "No playlists found", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                created_playlistplay = true;
-                SelectPlaylistWindow new_window = new SelectPlaylistWindow(fetched_playlists);
-                if (new_window.ShowDialog() == true)
-                {
-                    PlaylistObject? selected = PlaylistHandler.selected_playlist;
-                    if (selected != null)
-                    {
-                        LoadFiles(selected.playlist_items.ToArray());
-                        opened_playlist = selected;
-                        created_playlistplay = false;
-                    }
+                    previous_order.Clear();
+                    is_shuffled = false;
+                    shuffle_btn.Content = new Image { Source = new BitmapImage(new Uri($"/Sprites{sprite_path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute)) };
+
+                    LoadFiles(selected.playlist_items.ToArray());
+                    opened_playlist = selected;
                 }
             }
         }
@@ -1001,7 +1040,7 @@ namespace Media_Player
         private void info_menu_btn_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("""
-                Media Player v1.0.0
+                Media Player v1.3.0
 
                 Getting started:
                 To start using the media player you can either open a folder or some files to add to the list.
@@ -1072,6 +1111,98 @@ namespace Media_Player
                 {
                     Source = new BitmapImage(new Uri($"/Sprites{sprite_path}unmute.png", UriKind.RelativeOrAbsolute))
                 };
+            }
+        }
+
+        private async void export_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlaylistHandler.GetPlaylists().Count == 0)
+            {
+                MessageBox.Show("No playlists to export!", "Error: no playlists found!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ExportWindow ew = new ExportWindow();
+            ew.ShowDialog();
+        }
+        private async void export_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFolderDialog ofd = new OpenFolderDialog();
+            ofd.Title = "Select place to export statistics file";
+            ofd.Multiselect = false;
+            if (ofd.ShowDialog() == true)
+                await Externals.ExportStatistics(ofd.FolderName);
+        }
+
+        private async void import_playlist_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select files to import";
+            ofd.Multiselect = true;
+            ofd.Filter = $"Media Player Playlist File|*{Externals.PLAYLIST_EXPORT_FILE_EXTENSION}";
+
+            if (ofd.ShowDialog() == true)
+            {
+                if (fetched_settings.make_backups)
+                {
+                    bool backupResult = await Externals.Backup();
+                    if (!backupResult)
+                    {
+                        MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                
+                await Externals.Import(ofd.FileNames);
+            }
+        }
+
+        private async void import_statistics_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select files to import";
+            ofd.Multiselect = false;
+            ofd.Filter = $"Media Player Statistics File|*{Externals.STATISTICS_EXPORT_FILE_EXTENSION}";
+
+            if (ofd.ShowDialog() == true)
+            {
+                if (fetched_settings.make_backups)
+                {
+                    bool backupResult = await Externals.Backup();
+                    if (!backupResult)
+                    {
+                        MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                
+                await Externals.ImportStatistics(ofd.FileName);
+            }
+        }
+
+        private async void make_backup_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups"))) return;
+
+            bool result = await Externals.Backup();
+            if (result) MessageBox.Show($"Created backup in {System.IO.Path.Combine(AppContext.BaseDirectory, "Backups")}", "Successfully created backup!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            else MessageBox.Show($"Could not create backup!", "Failed created backup!", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private async void import_backup_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups"))) return;
+            if (MessageBox.Show("! WARNING !\nIF YOU IMPORT A BACKUP FILE, YOUR CURRENT DATABASE CONTENTS (STATISTICS AND PLAYLISTS) WILL BE WIPED AND THE DATA REPLACED WITH THE ONE IN THE BACKUP FILE! THIS CANNOT BE REVERTED! ARE YOU SURE YOU WISH TO CONTINUE?", "! WARNING !", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = System.IO.Path.Combine(AppContext.BaseDirectory, "Backups");
+            ofd.Multiselect = false;
+            ofd.Filter = $"Media Player Backup File|*{Externals.BACKUP_FILE_EXTENSION}";
+            
+            if (ofd.ShowDialog() == true)
+            {
+                bool result = await Externals.ImportBackup(ofd.FileName);
+                if (!result) MessageBox.Show($"Failed to import backup, cancelled.", "Backup import failed!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

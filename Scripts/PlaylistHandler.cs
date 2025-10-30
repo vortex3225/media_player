@@ -159,6 +159,21 @@ namespace Media_Player.Scripts
             }
         }
 
+        public static void DeleteAllPlaylists()
+        {
+            try
+            {
+                using (SQLiteConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    cnn.Execute("DELETE FROM Playlists");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't wipe playlists " + ex.Message);
+            }
+        }
+
         public static bool NameAlreadyExists(string name)
         {
             try

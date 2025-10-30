@@ -8,6 +8,7 @@
         WindowStyle="ToolWindow"
         Closed="Window_Closed"
         Icon="/Sprites/media_player.ico"
+        Background="{DynamicResource BackgroundBrush}"
         Title="(Compact) Media Player (Compact)" Height="250" Width="450">
     <Viewbox Stretch="Uniform">
         <Grid Height="80" Width="180" VerticalAlignment="Bottom">

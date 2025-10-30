@@ -10,7 +10,5 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("app_config.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media.db")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sprites/dark/media_player.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sprites/light/media_player.ico")]
 
 
