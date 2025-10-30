@@ -17,6 +17,7 @@
     <None Remove="Sprites\audio_file_image.png" />
     <None Remove="Sprites\bin_brush.png" />
     <None Remove="Sprites\bin_clear.png" />
+    <None Remove="Sprites\clear_stats.png" />
     <None Remove="Sprites\create_backup.png" />
     <None Remove="Sprites\cross.png" />
     <None Remove="Sprites\Dark\audio_file_image.png" />
@@ -56,6 +57,7 @@
     <None Remove="Sprites\shuffle_untriggered.png" />
     <None Remove="Sprites\skip.png" />
     <None Remove="Sprites\unmute.png" />
+    <None Remove="Sprites\view_stats.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,6 +72,9 @@
     <Content Include="media.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Sprites\clear_stats.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Sprites\create_backup.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -140,6 +145,9 @@
     <Resource Include="Sprites\Light\shuffle_untriggered.png" />
     <Resource Include="Sprites\Light\skip.png" />
     <Resource Include="Sprites\Light\unmute.png" />
+    <Resource Include="Sprites\view_stats.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Themes\Dark.xaml" />
     <Resource Include="Themes\Light.xaml" />
   </ItemGroup>

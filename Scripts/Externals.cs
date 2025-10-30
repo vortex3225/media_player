@@ -51,6 +51,14 @@ namespace Media_Player.Scripts
             return File.Open(file_path, FileMode.CreateNew);
         }
 
+        public static async Task ClearOldBackups()
+        {
+            string export_dir_path = Path.Combine(AppContext.BaseDirectory, "Backups");
+            if (!Directory.Exists(export_dir_path)) return;
+
+            string[] files_in_dir = Directory.GetFiles(export_dir_path);
+        }
+
         public static async Task<bool> ImportBackup(string backup_file, bool only_import_stats = false, bool only_import_playlists = false)
         {
             try

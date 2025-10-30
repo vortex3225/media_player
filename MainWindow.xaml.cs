@@ -181,6 +181,14 @@ namespace Media_Player
             {
                 Source = new BitmapImage(new Uri("/Sprites/import_backup.png", UriKind.RelativeOrAbsolute))
             };
+            view_stats_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/view_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            clear_stats_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/clear_stats.png", UriKind.RelativeOrAbsolute))
+            };
         }
         public void UpdateVideoPositionBar()
         {
