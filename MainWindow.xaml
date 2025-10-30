@@ -14,12 +14,12 @@
                 <MenuItem x:Name="open_file_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open File" Click="open_file_menu_btn_Click"/>
                 <MenuItem x:Name="open_folder_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Open Folder" Click="open_folder_menu_btn_Click"/>
                 <MenuItem x:Name="clear_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Clear opened files" Click="clear_menu_btn_Click"/>
-                <Separator Background="{DynamicResource BackgroundBrush}"/>
+                <Separator/>
                 <MenuItem x:Name="export_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export playlist(s)" Click="export_playlist_menu_btn_Click"/>
                 <MenuItem x:Name="export_statistics_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Export statistics" Click="export_statistics_menu_btn_Click"/>
                 <MenuItem x:Name="import_playlist_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import playlist(s)" Click="import_playlist_menu_btn_Click"/>
                 <MenuItem x:Name="import_statistics_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import statistics" Click="import_statistics_menu_btn_Click"/>
-                <Separator Background="{DynamicResource BackgroundBrush}"/>
+                <Separator/>
                 <MenuItem x:Name="make_backup_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Create a backup" Click="make_backup_menu_btn_Click"/>
                 <MenuItem x:Name="import_backup_menu_btn" Background="{DynamicResource BackgroundBrush}" Header="Import a backup" Click="import_backup_menu_btn_Click"/>
             </MenuItem>

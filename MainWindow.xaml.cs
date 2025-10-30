@@ -157,6 +157,30 @@ namespace Media_Player
             {
                 Source = new BitmapImage(new Uri($"/Sprites/pencil.png", UriKind.RelativeOrAbsolute))
             };
+            export_playlist_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/export.png", UriKind.RelativeOrAbsolute))
+            };
+            import_playlist_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import.png", UriKind.RelativeOrAbsolute))
+            };
+            export_statistics_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/export_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            import_statistics_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import_stats.png", UriKind.RelativeOrAbsolute))
+            };
+            make_backup_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/create_backup.png", UriKind.RelativeOrAbsolute))
+            };
+            import_backup_menu_btn.Icon = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Sprites/import_backup.png", UriKind.RelativeOrAbsolute))
+            };
         }
         public void UpdateVideoPositionBar()
         {
