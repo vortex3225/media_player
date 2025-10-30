@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 
 namespace Media_Player
@@ -1104,7 +1105,7 @@ namespace Media_Player
             {
                 if (fetched_settings.make_backups)
                 {
-                    bool backupResult = await Externals.Backup(Externals.BackupType.Playlist);
+                    bool backupResult = await Externals.Backup();
                     if (!backupResult)
                     {
                         MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1127,7 +1128,7 @@ namespace Media_Player
             {
                 if (fetched_settings.make_backups)
                 {
-                    bool backupResult = await Externals.Backup(Externals.BackupType.Statistics);
+                    bool backupResult = await Externals.Backup();
                     if (!backupResult)
                     {
                         MessageBox.Show($"Backup failed, cancelled importing!", "Backup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -1136,6 +1137,32 @@ namespace Media_Player
                 }
                 
                 await Externals.ImportStatistics(ofd.FileName);
+            }
+        }
+
+        private async void make_backup_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups"))) return;
+
+            bool result = await Externals.Backup();
+            if (result) MessageBox.Show($"Created backup in {System.IO.Path.Combine(AppContext.BaseDirectory, "Backups")}", "Successfully created backup!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            else MessageBox.Show($"Could not create backup!", "Failed created backup!", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private async void import_backup_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups"))) return;
+            if (MessageBox.Show("! WARNING !\nIF YOU IMPORT A BACKUP FILE, YOUR CURRENT DATABASE CONTENTS (STATISTICS AND PLAYLISTS) WILL BE WIPED AND THE DATA REPLACED WITH THE ONE IN THE BACKUP FILE! THIS CANNOT BE REVERTED! ARE YOU SURE YOU WISH TO CONTINUE?", "! WARNING !", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = System.IO.Path.Combine(AppContext.BaseDirectory, "Backups");
+            ofd.Multiselect = false;
+            ofd.Filter = $"Media Player Backup File|*{Externals.BACKUP_FILE_EXTENSION}";
+            
+            if (ofd.ShowDialog() == true)
+            {
+                bool result = await Externals.ImportBackup(ofd.FileName);
+                if (!result) MessageBox.Show($"Failed to import backup, cancelled.", "Backup import failed!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

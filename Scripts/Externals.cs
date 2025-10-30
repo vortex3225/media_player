@@ -76,12 +76,12 @@ namespace Media_Player.Scripts
 
                     if (line.StartsWith("[") && line.EndsWith("]"))
                     {
-                        if (line.Contains("PLAYLISTS") && playlist_start == -1) playlist_start = i + 1;
-                        else if (line.Contains("STATISTICS") && playlist_start == -1) statistics_start = i + 1;
+                        if (line.Contains("PLAYLISTS") && playlist_start <= -1) playlist_start = i + 1;
+                        else if (line.Contains("STATISTICS") && statistics_start <= -1) statistics_start = i + 1;
                     }
                 }
 
-                if (!only_import_stats)
+                if (!only_import_stats && playlist_start > -1)
                 {
                     string playlist_name = string.Empty;
 
@@ -94,7 +94,7 @@ namespace Media_Player.Scripts
                         {
                             if (!string.IsNullOrEmpty(playlist_name))
                             {
-                                playlists_ToSave.Add(new PlaylistObject(playlist_name, items, plays));
+                                playlists_ToSave.Add(new PlaylistObject(playlist_name, new List<string>(items), new Dictionary<string, int>(plays)));
                                 items.Clear();
                                 plays.Clear();
                             }
@@ -116,12 +116,24 @@ namespace Media_Player.Scripts
                     }
                 }
 
-                if (!only_import_playlists)
+                if (!only_import_playlists && statistics_start > -1)
                 {
                     for (int i = statistics_start; i < backup_file_lines.Length; i++)
                     {
+                        string line = backup_file_lines[i];
+                        
+                        if (string.IsNullOrEmpty(line)) continue;
+                        SetStatisticsImportData(line);
+                    }
+                    StatisticsObject.Save();
+                }
 
-                    }    
+                // wipes every playlist currently saved
+                PlaylistHandler.DeleteAllPlaylists();
+
+                foreach (PlaylistObject playlist in playlists_ToSave)
+                {
+                    PlaylistHandler.SavePlaylist(playlist);
                 }
 
                 return true;
@@ -129,10 +141,11 @@ namespace Media_Player.Scripts
             catch (Exception ex)
             {
                 MessageBox.Show($"Could not import backup: {ex.StackTrace} --- {ex.Message}");
+                return false;
             }
         }
 
-        public static async Task<bool> Backup(BackupType b_type)
+        public static async Task<bool> Backup()
         {
             try
             {
@@ -312,6 +325,52 @@ namespace Media_Player.Scripts
             }
         }
 
+        private static void SetStatisticsImportData(string line)
+        {
+            string[] split = line.Split("=");
+
+            if (split.Length == 2)
+            {
+                split[0] = split[0].Trim();
+                split[1] = split[1].Trim();
+
+                switch (split[0])
+                {
+                    case "install_date":
+                        // MessageBox.Show(split[0]);
+                        StatisticsObject.InstallationDate = DateTimeOffset.FromUnixTimeSeconds(Int64.Parse(split[1])).LocalDateTime;
+                        break;
+                    case "time_listened":
+                        StatisticsObject.TimeListened = double.Parse(split[1]);
+                        break;
+                    case "highest_s_time":
+                        StatisticsObject.HighestSessionTime = double.Parse(split[1]);
+                        break;
+                    case "average_s_time":
+                        StatisticsObject.AverageSessionTime = double.Parse(split[1]);
+                        break;
+                    case "sessions":
+                        StatisticsObject.Sessions = int.Parse(split[1]);
+                        break;
+                    case "tracks_played":
+                        StatisticsObject.TracksPlayed = int.Parse(split[1]);
+                        break;
+                    case "most_listened_track":
+                        StatisticsObject.MostListenedTrack = split[1];
+                        break;
+                    case "most_listened_t_plays":
+                        StatisticsObject.MostListenedTrackPlays = int.Parse(split[1]);
+                        break;
+                    case "total_playlists":
+                        StatisticsObject.TotalPlaylists = int.Parse(split[1]);
+                        break;
+                    case "total_tracks_playlists":
+                        StatisticsObject.TotalTracksInPlaylists = int.Parse(split[1]);
+                        break;
+                }
+            }
+        }
+
         public static async Task<bool> ImportStatistics(string file_path)
         {
             try
@@ -330,49 +389,7 @@ namespace Media_Player.Scripts
                             continue;
                         }
 
-                        string[] split = line.Split("=");
-
-                        if (split.Length == 2)
-                        {
-                            split[0] = split[0].Trim();
-                            split[1] = split[1].Trim();
-
-                            switch (split[0])
-                            {
-                                case "install_date":
-                                    // MessageBox.Show(split[0]);
-                                    StatisticsObject.InstallationDate = DateTimeOffset.FromUnixTimeSeconds(Int64.Parse(split[1])).LocalDateTime;
-                                    break;
-                                case "time_listened":
-                                    StatisticsObject.TimeListened = double.Parse(split[1]);
-                                    break;
-                                case "highest_s_time":
-                                    StatisticsObject.HighestSessionTime = double.Parse(split[1]);
-                                    break;
-                                case "average_s_time":
-                                    StatisticsObject.AverageSessionTime = double.Parse(split[1]);
-                                    break;
-                                case "sessions":
-                                    StatisticsObject.Sessions = int.Parse(split[1]);
-                                    break;
-                                case "tracks_played":
-                                    StatisticsObject.TracksPlayed = int.Parse(split[1]);
-                                    break;
-                                case "most_listened_track":
-                                    StatisticsObject.MostListenedTrack = split[1];
-                                    break;
-                                case "most_listened_t_plays":
-                                    StatisticsObject.MostListenedTrackPlays = int.Parse(split[1]);
-                                    break;
-                                case "total_playlists":
-                                    StatisticsObject.TotalPlaylists = int.Parse(split[1]);
-                                    break;
-                                case "total_tracks_playlists":
-                                    StatisticsObject.TotalTracksInPlaylists = int.Parse(split[1]);
-                                    break;
-                            }
-                        }
-
+                        SetStatisticsImportData(line);
                         line = await reader.ReadLineAsync();
                     }
 
