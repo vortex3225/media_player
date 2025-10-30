@@ -68,6 +68,10 @@ namespace Media_Player
         {
             InitializeComponent();
             InitialiseMenuItemIcons();
+            if (!Directory.Exists(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups")))
+                Directory.CreateDirectory(System.IO.Path.Combine(AppContext.BaseDirectory, "Backups"));
+
+
             video_out_display.LoadedBehavior = MediaState.Manual;
             fetched_settings = AppHandler.InitSettings();
             if (fetched_settings.drp == true) DiscordRichPresenceHandler.InitialiseClient(); else DiscordRichPresenceHandler.Dispose();
