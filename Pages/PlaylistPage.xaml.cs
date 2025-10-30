@@ -244,9 +244,27 @@ namespace Media_Player.Objects
             }
         }
 
+        private char[] illegal_name_chars = { '[', ']', '-', ' ' };
+
+        private bool NameContainsIllegalChars(string name)
+        {
+
+            foreach (char c in name.ToCharArray())
+                if (illegal_name_chars.Contains<char>(c)) return true;
+
+            return false;
+        }
+
         private void create_playlist_btn_Click(object sender, RoutedEventArgs e)
         {
             bool name_already_exists = PlaylistHandler.NameAlreadyExists(playlist_name_box.Text);
+
+            if (NameContainsIllegalChars(playlist_name_box.Text))
+            {
+                MessageBox.Show($"Name contains illegal characters!", "Illegal characters found in name.", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             if (!string.IsNullOrEmpty(playlist_name_box.Text) && !name_already_exists)
             {
                 string name = playlist_name_box.Text;

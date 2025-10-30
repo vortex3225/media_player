@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,87 @@ namespace Media_Player.Scripts
             }
 
             return File.Open(file_path, FileMode.CreateNew);
+        }
+
+        public static async Task<bool> ImportBackup(string backup_file, bool only_import_stats = false, bool only_import_playlists = false)
+        {
+            try
+            {
+                if (!File.Exists(backup_file)) throw new FileNotFoundException($"Could not find file: {backup_file}");
+
+                List<PlaylistObject> playlists_ToSave = new List<PlaylistObject>();
+
+                string current_playlist_name = string.Empty;
+                List<string> items = new List<string>();
+                Dictionary<string, int> plays = new Dictionary<string, int>();
+
+
+                string[] backup_file_lines = File.ReadAllLines(backup_file);
+
+                int playlist_start = -1, statistics_start = -1;
+                
+                for (int i = 0; i < backup_file_lines.Length; i++)
+                {
+                    string line = backup_file_lines[i];
+
+                    if (string.IsNullOrEmpty(line) || line.Contains("[EXPORT")) continue;
+
+                    if (line.StartsWith("[") && line.EndsWith("]"))
+                    {
+                        if (line.Contains("PLAYLISTS") && playlist_start == -1) playlist_start = i + 1;
+                        else if (line.Contains("STATISTICS") && playlist_start == -1) statistics_start = i + 1;
+                    }
+                }
+
+                if (!only_import_stats)
+                {
+                    string playlist_name = string.Empty;
+
+                    for (int i = playlist_start; i < backup_file_lines.Length; i++)
+                    {
+                        string line = backup_file_lines[i];
+                        if (string.IsNullOrEmpty(line)) continue;
+
+                        if (line.StartsWith("[") && line.EndsWith("]"))
+                        {
+                            if (!string.IsNullOrEmpty(playlist_name))
+                            {
+                                playlists_ToSave.Add(new PlaylistObject(playlist_name, items, plays));
+                                items.Clear();
+                                plays.Clear();
+                            }
+
+                            playlist_name = line.Substring(1, line.Length - 2);
+                        }
+                        else
+                        {
+                            string[] split = line.Split(" | ");
+                            if (split.Length == 2)
+                            {
+                                split[0] = split[0].Trim();
+                                split[1] = split[1].Trim();
+
+                                items.Add(split[0]);
+                                plays.Add(split[0], int.Parse(split[1]));
+                            }
+                        }
+                    }
+                }
+
+                if (!only_import_playlists)
+                {
+                    for (int i = statistics_start; i < backup_file_lines.Length; i++)
+                    {
+
+                    }    
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not import backup: {ex.StackTrace} --- {ex.Message}");
+            }
         }
 
         public static async Task<bool> Backup(BackupType b_type)
@@ -306,6 +388,59 @@ namespace Media_Player.Scripts
             }
         }
 
+        private static async Task<List<PlaylistObject>> ReadPlaylistFileContent(StreamReader reader)
+        {
+            List<PlaylistObject> playlists_ToSave = new List<PlaylistObject>();
+
+            string current_playlist_name = string.Empty;
+            List<string> items = new List<string>();
+            Dictionary<string, int> plays = new Dictionary<string, int>();
+
+            string? line = await reader.ReadLineAsync();
+            while (true)
+            {
+
+                if (reader.EndOfStream)
+                {
+                    if (items.Count > 0 && !string.IsNullOrEmpty(current_playlist_name) && plays.Count > 0)
+                        playlists_ToSave.Add(new PlaylistObject(current_playlist_name, items, plays));
+
+                    break;
+                }
+
+                if (string.IsNullOrEmpty(line) || line.Contains("[EXPORT"))
+                {
+                    line = await reader.ReadLineAsync();
+                    continue;
+                }
+
+                if (line.StartsWith("[") && line.EndsWith("]"))
+                {
+                    if (!string.IsNullOrEmpty(current_playlist_name))
+                    {
+                        playlists_ToSave.Add(new PlaylistObject(current_playlist_name, new List<string>(items), new Dictionary<string, int>(plays)));
+                        items.Clear();
+                        plays.Clear();
+                    }
+
+                    current_playlist_name = line.Substring(1, line.Length - 2);
+                }
+                else
+                {
+                    string[] split = line.Split(" | ");
+                    if (split.Length == 2)
+                    {
+                        items.Add(split[0]);
+                        plays.TryAdd(split[0], int.Parse(split[1]));
+                    }
+                }
+                line = await reader.ReadLineAsync();
+            }
+
+            return playlists_ToSave;
+        }
+
+
         public static async Task<bool> Import(string[] file_paths)
         {
             try
@@ -320,50 +455,7 @@ namespace Media_Player.Scripts
                     using (var fileStream = File.OpenRead(file_path))
                     using (var reader = new StreamReader(fileStream))
                     {
-                        string current_playlist_name = string.Empty;
-                        List<string> items = new List<string>();
-                        Dictionary<string, int> plays = new Dictionary<string, int>();
-
-                        string? line = await reader.ReadLineAsync();
-                        while (true)
-                        {
-
-                            if (reader.EndOfStream)
-                            {
-                                if (items.Count > 0 && !string.IsNullOrEmpty(current_playlist_name) && plays.Count > 0)
-                                    playlists_ToSave.Add(new PlaylistObject(current_playlist_name, items, plays));
-                                
-                                break;
-                            }
-
-                            if (string.IsNullOrEmpty(line) || line.Contains("[EXPORT"))
-                            {
-                                line = await reader.ReadLineAsync();
-                                continue;
-                            }
-
-                            if (line.StartsWith("[") && line.EndsWith("]"))
-                            {
-                                if (!string.IsNullOrEmpty(current_playlist_name))
-                                {                                    
-                                    playlists_ToSave.Add(new PlaylistObject(current_playlist_name, new List<string>(items), new Dictionary<string, int>(plays)));
-                                    items.Clear();
-                                    plays.Clear();
-                                }
-
-                                current_playlist_name = line.Substring(1, line.Length - 2);
-                            } 
-                            else if (!string.IsNullOrEmpty(line))
-                            {
-                                string[] split = line.Split(" | ");
-                                if (split.Length == 2)
-                                {
-                                    items.Add(split[0]);
-                                    plays.TryAdd(split[0], int.Parse(split[1]));
-                                }
-                            }
-                            line = await reader.ReadLineAsync();
-                        }
+                        playlists_ToSave = await ReadPlaylistFileContent(reader);
                     }
                 }
 
