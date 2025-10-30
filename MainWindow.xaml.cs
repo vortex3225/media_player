@@ -602,6 +602,7 @@ namespace Media_Player
         }
         public void SwitchPlayColor(string dir)
         {
+            sprite_path = dir;
             previous_song_btn.Content = new Image
             {
                 Source = new BitmapImage(new Uri($"/Sprites{dir}previous.png", UriKind.RelativeOrAbsolute))
