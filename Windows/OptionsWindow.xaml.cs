@@ -46,7 +46,16 @@ namespace Media_Player
             drp_checkbox.IsChecked = settings.drp;
             dark_mode_check.IsChecked = settings.theme == "dark";
             this.Closing += OptionsWindow_Closing;
+            backup_lifespan_box.TextChanged += Backup_lifespan_box_TextChanged;
             actual = window;
+        }
+
+        private void Backup_lifespan_box_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int val;
+            if (int.TryParse(backup_lifespan_box.Text, out val))
+                settings.backup_lifespan = val;
+            else backup_lifespan_box.Text = "7";
         }
 
         private void OptionsWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -103,11 +112,6 @@ namespace Media_Player
         private void resume_checkbox_Click(object sender, RoutedEventArgs e)
         {
             settings.resume_on_enter = (bool)resume_checkbox.IsChecked;
-        }
-
-        private void dark_mode_checkbox_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void save_opened_files_checkbox_Click(object sender, RoutedEventArgs e)

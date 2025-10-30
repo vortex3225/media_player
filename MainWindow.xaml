@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
         Icon="/Sprites/media_player.ico"
+        Loaded="Window_Loaded"
         Background="{DynamicResource BackgroundBrush}"
         Title="Media Player" Height="550" Width="950">
     <DockPanel LastChildFill="False">

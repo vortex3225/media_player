@@ -62,8 +62,8 @@ namespace Media_Player
 
         public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
 
-        private Stopwatch playtime_watch = new Stopwatch();
-        private Stopwatch session_watch = new Stopwatch();
+        private static Stopwatch playtime_watch = new Stopwatch();
+        public static Stopwatch session_watch = new Stopwatch();
         public MainWindow()
         {
             InitializeComponent();
@@ -121,6 +121,14 @@ namespace Media_Player
 
             StatisticsObject.Load();
             session_watch.Start();
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (fetched_settings.delete_old_backups == true)
+            {
+                await Externals.ClearOldBackups(fetched_settings.backup_lifespan);
+            }
         }
 
         private void InitialiseMenuItemIcons()

@@ -18,6 +18,7 @@ namespace Media_Player.Scripts
     public static class Externals
     {
         private const string SYSTEM_VERSION = "1.0.0";
+        private const int DEFAULT_BACKUP_LIFESPAN = 7; // in days
 
         public const string PLAYLIST_EXPORT_FILE_EXTENSION = ".mp";
         public const string STATISTICS_EXPORT_FILE_EXTENSION = ".mps";
@@ -51,12 +52,86 @@ namespace Media_Player.Scripts
             return File.Open(file_path, FileMode.CreateNew);
         }
 
-        public static async Task ClearOldBackups()
+        public static async Task<bool> ClearOldBackups(int lifespan = -1)
         {
-            string export_dir_path = Path.Combine(AppContext.BaseDirectory, "Backups");
-            if (!Directory.Exists(export_dir_path)) return;
+            if (lifespan == -1) lifespan = DEFAULT_BACKUP_LIFESPAN;
 
-            string[] files_in_dir = Directory.GetFiles(export_dir_path);
+            static DateTime? ParseDateTime(string date_time_string)
+            {
+                int year, month, day, hour, minute;
+
+                try
+                {
+                    string[] split_date = date_time_string.Replace("]", "").Trim().Split(" ");
+                    foreach (string s in split_date)
+                    {
+                        Console.WriteLine($"Date: {s}");
+                    }
+
+                    if (split_date.Length == 4)
+                    {
+                        day = int.Parse(split_date[0]);
+                        month = int.Parse(split_date[1]);
+                        year = int.Parse(split_date[2]);
+
+                        string[] time_split = split_date[3].Split(":");
+                        hour = int.Parse(time_split[0]);
+                        minute = int.Parse(time_split[1]);
+
+                        return new DateTime(year, month, day, hour, minute, 0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Could not parse file creation DateTime from header --> {ex.StackTrace} --- {ex.Message}");
+                }
+
+                return null;
+            }
+
+            try
+            {
+                string export_dir_path = Path.Combine(AppContext.BaseDirectory, "Backups");
+                if (!Directory.Exists(export_dir_path)) throw new DirectoryNotFoundException("Could not find Backups directory!");
+
+                string[] files_in_dir = Directory.GetFiles(export_dir_path);
+                foreach (string file_p in files_in_dir)
+                {
+                    if (!Path.GetExtension(file_p).Contains("mbk")) continue;
+
+                    string? header = string.Empty;
+                    using (var file_stream = File.OpenRead(file_p))
+                    using (var reader = new StreamReader(file_stream))
+                    {
+                        header = await reader.ReadLineAsync();
+                        while (!reader.EndOfStream)
+                        {
+                            if (string.IsNullOrEmpty(header)) continue;
+                            if (header.StartsWith("[") && header.EndsWith("]") && header.Contains("[EXPORT")) break;
+                            header = await reader.ReadLineAsync();
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(header))
+                    {
+                        // $"[EXPORT HEADER: VERSION={SYSTEM_VERSION}, EXPORTED AT={DateTime.Now.ToString("dd MM yyyy HH:mm")}]"
+                        string[] parts = header.Split("=");
+                        string date_time_part = parts[2].Replace("@", "");
+
+                        DateTime ?created_at = ParseDateTime(date_time_part);
+                        if (created_at == null) throw new Exception("ParseDateTime function returned null.");
+                        TimeSpan elapsed = (TimeSpan)(DateTime.Now - created_at);
+
+                        if (elapsed.TotalSeconds >= lifespan) File.Delete(file_p);
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not delete old backup files --> {ex.StackTrace} --- {ex.Message}");
+                return false;
+            }
+
         }
 
         public static async Task<bool> ImportBackup(string backup_file, bool only_import_stats = false, bool only_import_playlists = false)
