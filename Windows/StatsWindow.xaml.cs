@@ -42,6 +42,7 @@ namespace Media_Player.Windows
 
         private void refresh_btn_Click(object sender, RoutedEventArgs e)
         {
+            StatisticsObject.CurrentSessionTime = MainWindow.session_watch.Elapsed.TotalSeconds;
             StatisticsObject.Save();
             Display();
         }
