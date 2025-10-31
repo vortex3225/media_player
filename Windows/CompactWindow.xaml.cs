@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Media_Player.Objects;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +22,69 @@ namespace Media_Player
     public partial class CompactWindow : Window
     {
         private MainWindow ?Master = null;
+
+        private void InitColor()
+        {
+            if (Master == null) return;
+            string path = (MainWindow.fetched_settings.theme.ToLower() == "dark" ? "/Dark/" : "/Light/");
+            pause_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{path}pause.png", UriKind.RelativeOrAbsolute))
+            };
+            Master.pause_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{path}pause.png", UriKind.RelativeOrAbsolute))
+            };
+            if (MainWindow.is_shuffled)
+            {
+                shuffle_btn.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri($"/Sprites{path}shuffle_triggered.png", UriKind.RelativeOrAbsolute))
+                };
+            }
+            else
+            {
+                shuffle_btn.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri($"/Sprites{path}shuffle_untriggered.png", UriKind.RelativeOrAbsolute))
+                };
+            }
+
+            skip_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{path}skip.png", UriKind.RelativeOrAbsolute))
+            };
+            previous_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{path}previous.png", UriKind.RelativeOrAbsolute))
+            };
+            rewind_current_song_btn.Content = new Image
+            {
+                Source = new BitmapImage(new Uri($"/Sprites{path}rewind.png", UriKind.RelativeOrAbsolute))
+            };
+            if (MainWindow.is_looping)
+            {
+                repeat_btn.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri($"/Sprites{path}repeat_triggered.png", UriKind.RelativeOrAbsolute))
+                };
+            }
+            else
+            {
+                repeat_btn.Content = new Image
+                {
+                    Source = new BitmapImage(new Uri($"/Sprites{path}repeat_untriggered.png", UriKind.RelativeOrAbsolute))
+                };
+            }
+        }
+
         public CompactWindow(MainWindow master_window)
         {
             InitializeComponent();
             Master = master_window;
             volume_bar.Value = Master.video_out_display.Volume * 100;
             volume_display.Text = $"Volume: {volume_bar.Value}";
+            InitColor();
         }
 
 #pragma warning disable
@@ -46,20 +105,22 @@ namespace Media_Player
 
         private async void pause_btn_Click(object sender, RoutedEventArgs e) // compied logic from mainwindow pause event
         {
+            string path = (MainWindow.fetched_settings.theme.ToLower() == "dark" ? "/Dark/" : "/Light/");
+
             if (MainWindow.current_state == PlayerState.Paused || MainWindow.current_state == PlayerState.None)
             {
                 if (MainWindow.current_file_index < Master.playlist_contents.Items.Count)
-                {
+                { 
                     MainWindow.current_state = PlayerState.Playing;
                     pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}pause.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{path}pause.png", UriKind.RelativeOrAbsolute))
                     };
                     Master.pause_btn.Dispatcher.Invoke(new Action(() =>
                     {
                         Master.pause_btn.Content = new Image
                         {
-                            Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}pause.png", UriKind.RelativeOrAbsolute))
+                            Source = new BitmapImage(new Uri($"/Sprites{path}pause.png", UriKind.RelativeOrAbsolute))
                         };
                     }));
                     ListViewItem? media_item = Master.playlist_contents.Items[MainWindow.current_file_index] as ListViewItem;
@@ -80,13 +141,13 @@ namespace Media_Player
                 MainWindow.current_state = PlayerState.Paused;
                 pause_btn.Content = new Image
                 {
-                    Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}play.png", UriKind.RelativeOrAbsolute))
+                    Source = new BitmapImage(new Uri($"/Sprites{path}play.png", UriKind.RelativeOrAbsolute))
                 };
                 Master.pause_btn.Dispatcher.Invoke(new Action(() =>
                 {
                     Master.pause_btn.Content = new Image
                     {
-                        Source = new BitmapImage(new Uri($"/Sprites{MainWindow.sprite_path}play.png", UriKind.RelativeOrAbsolute))
+                        Source = new BitmapImage(new Uri($"/Sprites{path}play.png", UriKind.RelativeOrAbsolute))
                     };
                 }));
                 Master.video_out_display.Pause();

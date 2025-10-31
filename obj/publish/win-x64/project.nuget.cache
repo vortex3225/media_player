@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iy4x879gEZA=",
+  "dgSpecHash": "eqR7oVci0j0=",
   "success": true,
   "projectFilePath": "D:\\Repos\\Media Player\\Media Player.csproj",
   "expectedPackageFiles": [
@@ -14,10 +14,7 @@
     "C:\\Users\\Alexandru\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512",
     "C:\\Users\\Alexandru\\.nuget\\packages\\system.drawing.common\\9.0.8\\system.drawing.common.9.0.8.nupkg.sha512",
     "C:\\Users\\Alexandru\\.nuget\\packages\\system.security.accesscontrol\\4.5.0\\system.security.accesscontrol.4.5.0.nupkg.sha512",
-    "C:\\Users\\Alexandru\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
-    "C:\\Users\\Alexandru\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.21\\microsoft.netcore.app.runtime.win-x64.8.0.21.nupkg.sha512",
-    "C:\\Users\\Alexandru\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.21\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.21.nupkg.sha512",
-    "C:\\Users\\Alexandru\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.21\\microsoft.aspnetcore.app.runtime.win-x64.8.0.21.nupkg.sha512"
+    "C:\\Users\\Alexandru\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }
