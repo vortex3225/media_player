@@ -60,7 +60,7 @@ namespace Media_Player
         public static string format = @"mm\:ss";
         public static string sprite_path = "/Light/";
 
-        public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
+        public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", "wav", "aac"}.ToImmutableList<string>();
 
         private static Stopwatch playtime_watch = new Stopwatch();
         public static Stopwatch session_watch = new Stopwatch();
