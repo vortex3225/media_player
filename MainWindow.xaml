@@ -61,6 +61,11 @@
                         <TextBlock x:Name="playlist_display" Foreground="{DynamicResource ForegroundBrush}" Visibility="Visible" IsEnabled="True" FontFamily="Arial" FontSize="11" TextAlignment="Center" Text="No playlist selected" Margin="0, 1, 0, 0" Height="17"/>
                         <TextBlock x:Name="song_plays_display" Foreground="{DynamicResource ForegroundBrush}" Visibility="Hidden" IsEnabled="False" FontFamily="Arial" FontSize="11" TextAlignment="Center" Text="0 plays" Margin="0, 1, 0, 0" Height="17"/>
                     </StackPanel>
+                    <StackPanel x:Name="playback_panel" Orientation="Vertical" Height="199" Width="46" HorizontalAlignment="Left" Canvas.Left="693" VerticalAlignment="Center" Canvas.Top="285">
+                        <TextBlock Text="Speed" TextAlignment="Center" FontFamily="Arial" FontSize="14" Foreground="{DynamicResource ForegroundBrush}"/>
+                        <Slider x:Name="playback_slider" Orientation="Vertical" Minimum="0.1" Maximum="2" Value="1" Height="157" Width="18" PreviewMouseUp="playback_slider_PreviewMouseUp" ValueChanged="playback_slider_ValueChanged"/>
+                        <TextBlock x:Name="playback_speed_display" Text="1x" TextAlignment="Center" FontFamily="Arial" Margin="0, 12, 0, 0" FontSize="12" Foreground="{DynamicResource ForegroundBrush}" MouseUp="playback_speed_display_MouseUp" MouseEnter="playback_speed_display_MouseEnter" MouseLeave="playback_speed_display_MouseLeave"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" x:Name="volume_panel" Height="23" Width="602" Canvas.Left="75" Canvas.Top="382" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <TextBlock x:Name="volume_display" Foreground="{DynamicResource ForegroundBrush}" Text="Volume: 15" FontSize="14" TextAlignment="Center" FontFamily="Arial" Height="18" Width="84"/>
                         <Slider x:Name="volume_slider" ValueChanged="volume_slider_ValueChanged" Maximum="100" Minimum="0" SmallChange="1" Value="15" Width="468" Height="18"/>

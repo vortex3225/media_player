@@ -1238,5 +1238,42 @@ namespace Media_Player
         {
             MessageBox.Show($"Media failed because of: {e.ErrorException}");
         }
+
+        private void playback_slider_PreviewMouseUp(object? sender, MouseButtonEventArgs? e)
+        {
+            double playback_speed = playback_slider.Value;
+
+            if (playback_speed_display != null)
+            {
+                TimeSpan pos = video_out_display.Position;
+                video_out_display.SpeedRatio = playback_speed;
+                video_out_display.Stop();
+                video_out_display.Position = pos - TimeSpan.FromMilliseconds(50);
+                video_out_display.Play();
+            }
+        }
+
+        private void playback_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double playback_speed = playback_slider.Value;
+            if (playback_speed_display != null)
+                playback_speed_display.Text = $"{playback_speed.ToString("n2")}x";
+        }
+
+        private void playback_speed_display_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            playback_slider.Value = 1;
+            playback_slider_PreviewMouseUp(null, null);
+        }
+
+        private void playback_speed_display_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void playback_speed_display_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = null;
+        }
     }
 }
