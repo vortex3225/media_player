@@ -511,23 +511,16 @@ namespace Media_Player
         }
         public void Seek()
         {
-            if (!compact_mode_enabled)
+            Debug.WriteLine(current_state);
+            // current_state = PlayerState.Playing;
+            TimeSpan new_timespan = new TimeSpan();
+            if (current_state == PlayerState.Playing) video_out_display.Pause();
+            if (!compact_mode_enabled) new_timespan = CalculateNewTimespan();
+            else new_timespan = compact_window.CalculateNewTimespan();
+            video_out_display.Position = new_timespan;
+            current_pos_display.Text = new_timespan.ToString(format);
+            if (current_state == PlayerState.Playing)
             {
-                current_state = PlayerState.Playing;
-                video_out_display.Pause();
-                TimeSpan new_timespan = CalculateNewTimespan();
-                video_out_display.Position = new_timespan;
-                update_seek_bar_thread = new Thread(UpdateVideoPositionBar);
-                update_seek_bar_thread.IsBackground = true;
-                update_seek_bar_thread.Start();
-                video_out_display.Play();
-            }
-            else
-            {
-                current_state = PlayerState.Playing;
-                video_out_display.Pause();
-                TimeSpan new_timespan = compact_window.CalculateNewTimespan();
-                video_out_display.Position = new_timespan;
                 update_seek_bar_thread = new Thread(UpdateVideoPositionBar);
                 update_seek_bar_thread.IsBackground = true;
                 update_seek_bar_thread.Start();
@@ -540,7 +533,9 @@ namespace Media_Player
         }
         private void media_position_slider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            PlayerState prev_state = current_state;
             current_state = PlayerState.Paused; // stops the update thread
+            current_state = prev_state;
         }
 
         private void video_out_display_MediaOpened(object sender, RoutedEventArgs e)
