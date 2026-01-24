@@ -1,5 +1,5 @@
 ﻿Media Player
-1.5.0
+1.5.2
 
 winexe
 C#
@@ -13,7 +13,7 @@ D:\Repos\Media Player\App.xaml
 81657972516
 3-1556493446
 22-581241592
-2041043706418
+2041334616484
 MainWindow.xaml;Pages\PlaylistPage.xaml;Windows\CompactWindow.xaml;Windows\ExportWindow.xaml;Windows\OptionsWindow.xaml;Windows\PlaylistEditPage.xaml;Windows\SelectPlaylistWindow.xaml;Windows\StatsWindow.xaml;
 
 False

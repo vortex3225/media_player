@@ -60,7 +60,7 @@ namespace Media_Player
         public static string format = @"mm\:ss";
         public static string sprite_path = "/Light/";
 
-        public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", }.ToImmutableList<string>();
+        public readonly ImmutableList<string> VALID_FILE_EXTENSIONS = new List<string> {"mp3", "mp4", "m4a", "wav", "aac"}.ToImmutableList<string>();
 
         private static Stopwatch playtime_watch = new Stopwatch();
         public static Stopwatch session_watch = new Stopwatch();
@@ -511,23 +511,16 @@ namespace Media_Player
         }
         public void Seek()
         {
-            if (!compact_mode_enabled)
+            Debug.WriteLine(current_state);
+            // current_state = PlayerState.Playing;
+            TimeSpan new_timespan = new TimeSpan();
+            if (current_state == PlayerState.Playing) video_out_display.Pause();
+            if (!compact_mode_enabled) new_timespan = CalculateNewTimespan();
+            else new_timespan = compact_window.CalculateNewTimespan();
+            video_out_display.Position = new_timespan;
+            current_pos_display.Text = new_timespan.ToString(format);
+            if (current_state == PlayerState.Playing)
             {
-                current_state = PlayerState.Playing;
-                video_out_display.Pause();
-                TimeSpan new_timespan = CalculateNewTimespan();
-                video_out_display.Position = new_timespan;
-                update_seek_bar_thread = new Thread(UpdateVideoPositionBar);
-                update_seek_bar_thread.IsBackground = true;
-                update_seek_bar_thread.Start();
-                video_out_display.Play();
-            }
-            else
-            {
-                current_state = PlayerState.Playing;
-                video_out_display.Pause();
-                TimeSpan new_timespan = compact_window.CalculateNewTimespan();
-                video_out_display.Position = new_timespan;
                 update_seek_bar_thread = new Thread(UpdateVideoPositionBar);
                 update_seek_bar_thread.IsBackground = true;
                 update_seek_bar_thread.Start();
@@ -540,7 +533,9 @@ namespace Media_Player
         }
         private void media_position_slider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            PlayerState prev_state = current_state;
             current_state = PlayerState.Paused; // stops the update thread
+            current_state = prev_state;
         }
 
         private void video_out_display_MediaOpened(object sender, RoutedEventArgs e)
@@ -1237,6 +1232,49 @@ namespace Media_Player
         private void video_out_display_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MessageBox.Show($"Media failed because of: {e.ErrorException}");
+        }
+
+        private void playback_slider_PreviewMouseUp(object? sender, MouseButtonEventArgs? e)
+        {
+            double playback_speed = playback_slider.Value;
+
+            if (playback_speed_display != null)
+            {
+                TimeSpan pos = video_out_display.Position;
+                video_out_display.SpeedRatio = playback_speed;
+                video_out_display.Stop();
+                video_out_display.Position = pos - TimeSpan.FromMilliseconds(50);
+                video_out_display.Play();
+            }
+        }
+
+        private void playback_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double playback_speed = playback_slider.Value;
+            if (playback_speed_display != null)
+                playback_speed_display.Text = $"{playback_speed.ToString("n2")}x";
+        }
+
+        private void playback_speed_display_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            playback_slider.Value = 1;
+            playback_slider_PreviewMouseUp(null, null);
+        }
+
+        private void playback_speed_display_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void playback_speed_display_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = null;
+        }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
+            playlist_contents.SelectedItem = null;
         }
     }
 }
