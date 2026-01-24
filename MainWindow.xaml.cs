@@ -1270,5 +1270,11 @@ namespace Media_Player
         {
             Mouse.OverrideCursor = null;
         }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.ClearFocus();
+            playlist_contents.SelectedItem = null;
+        }
     }
 }
